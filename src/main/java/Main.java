@@ -8,10 +8,16 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 
-public class Main implements NativeKeyListener, NativeMouseInputListener {
-    public Main() {}
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 
-    public static void main(String[] args) {
+public class Main implements NativeKeyListener, NativeMouseInputListener {
+    private final Robot robot;
+    public Main() throws Exception {
+        this.robot = new Robot();
+    }
+
+    public static void main(String[] args) throws Exception {
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
         try {
@@ -29,14 +35,11 @@ public class Main implements NativeKeyListener, NativeMouseInputListener {
 
     public void nativeKeyPressed(NativeKeyEvent e) {
         System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-        // if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
-        //     try {
-        //         GlobalScreen.unregisterNativeHook();
-        //     } catch (NativeHookException e1) {
-        //         // TODO Auto-generated catch block
-        //         e1.printStackTrace();
-        //     }
-        // }
+        if (e.getKeyCode() == NativeKeyEvent.VC_1) {
+            // https://stackoverflow.com/questions/29665534/type-a-string-using-java-awt-robot
+            robot.keyPress(KeyEvent.VK_2);
+            robot.keyRelease(KeyEvent.VK_2);
+        }
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) {
