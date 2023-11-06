@@ -1,7 +1,7 @@
 package entities.shortcut;
 
 public class ShortcutActionPaste extends ShortcutAction {
-    final String content;
+    public final String content;
 
     ShortcutActionPaste(String content) {
         super(ShortcutActionType.PASTE);

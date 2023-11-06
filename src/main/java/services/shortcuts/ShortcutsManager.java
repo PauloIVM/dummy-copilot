@@ -8,7 +8,6 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 
 import entities.shortcut.Shortcut;
-import entities.shortcut.ShortcutAction;
 import entities.shortcut.ShortcutActionPaste;
 import entities.shortcut.ShortcutActionSequence;
 import entities.shortcut.ShortcutActionType;
@@ -17,6 +16,11 @@ import entities.shortcut.ShortcutKeyEvent;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Transferable;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,14 +88,17 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
             this.keysClicked.clear();
             shortcut.actions.forEach((a) -> {
                 if (a.actionType == ShortcutActionType.PASTE) {
-                    this.robot.keyPress(KeyEvent.VK_T);
-                    this.robot.keyRelease(KeyEvent.VK_T);
-                    this.robot.keyPress(KeyEvent.VK_O);
-                    this.robot.keyRelease(KeyEvent.VK_O);
-                    this.robot.keyPress(KeyEvent.VK_D);
-                    this.robot.keyRelease(KeyEvent.VK_D);
-                    this.robot.keyPress(KeyEvent.VK_O);
-                    this.robot.keyRelease(KeyEvent.VK_O);
+                    ShortcutActionPaste action = (ShortcutActionPaste) a;
+                    StringSelection selection = new StringSelection(action.content);
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    Transferable currClipboardData = clipboard.getContents(null);
+                    clipboard.setContents(selection, selection);
+                    this.robot.keyPress(KeyEvent.VK_CONTROL);
+                    this.robot.keyPress(KeyEvent.VK_V);
+                    this.robot.keyRelease(KeyEvent.VK_CONTROL);
+                    this.robot.keyRelease(KeyEvent.VK_V);
+                    this.robot.delay(30);
+                    clipboard.setContents(currClipboardData, null);
                 }
                 if (a.actionType == ShortcutActionType.SEQUENCE) {
                     ShortcutActionSequence action = (ShortcutActionSequence) a;
