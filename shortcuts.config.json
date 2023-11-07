@@ -1,0 +1,9 @@
+[
+    {
+        "trigger": ". g p ctrl",
+        "actions": [
+            { "type": "sequence", "keys": "backspace", "repeat": 3 },
+            { "type": "paste", "content": "git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)" }
+        ]
+    }
+]

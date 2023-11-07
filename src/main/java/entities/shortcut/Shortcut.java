@@ -15,6 +15,12 @@ public class Shortcut {
         return this;
     }
 
+    public Shortcut setTrigger(ArrayList<ShortcutKeyEvent> trigger) {
+        this.trigger.clear();
+        this.trigger.addAll(trigger);
+        return this;
+    }
+
     public Shortcut addAction(String content) {
         this.actions.add(new ShortcutActionPaste(content));
         return this;
@@ -22,6 +28,11 @@ public class Shortcut {
 
     public Shortcut addAction(Integer repeat, ShortcutKeyEvent ...keyEvents) {
         this.actions.add(new ShortcutActionSequence(repeat, this.buildKeysSequence(keyEvents)));
+        return this;
+    }
+
+    public Shortcut addAction(Integer repeat, ArrayList<ShortcutKeyEvent> keyEvents) {
+        this.actions.add(new ShortcutActionSequence(repeat, keyEvents));
         return this;
     }
 

@@ -51,8 +51,6 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         GlobalScreen.addNativeMouseMotionListener(this);
     }
 
-    // TODO: Vou ter que adicionar um carrier pra evitar que segurar a tecla dispare
-    // varios eventos...
     public void nativeKeyPressed(NativeKeyEvent e) {
         this.onKeyPressed(e, ShortcutClickType.DOWN);
     }
@@ -69,6 +67,8 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     public void nativeMouseDragged(NativeMouseEvent e) {}
 
     private void onKeyPressed(NativeKeyEvent e, ShortcutClickType clickType) {
+        // System.out.println("NativeKeyEvent: " + e.getKeyCode());
+        // System.out.println("ShortcutKeyEvent: " + this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode()));
         var keyEvent = new ShortcutKeyEvent(
             this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode()),
             clickType
@@ -90,6 +90,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
                 if (a.actionType == ShortcutActionType.PASTE) {
                     ShortcutActionPaste action = (ShortcutActionPaste) a;
                     StringSelection selection = new StringSelection(action.content);
+                    // TODO: Inverter a dependencia do clipboard pra facilitar os testes
                     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                     Transferable currClipboardData = clipboard.getContents(null);
                     clipboard.setContents(selection, selection);
