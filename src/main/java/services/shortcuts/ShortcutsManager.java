@@ -14,6 +14,8 @@ import entities.shortcut.ShortcutActionType;
 import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
 
+import repositories.ShortcutKeyIdAdapter;
+
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.Toolkit;
@@ -69,6 +71,8 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     private void onKeyPressed(NativeKeyEvent e, ShortcutClickType clickType) {
         // System.out.println("NativeKeyEvent: " + e.getKeyCode());
         // System.out.println("ShortcutKeyEvent: " + this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode()));
+        // ShortcutKeyIdAdapter adp = new ShortcutKeyIdAdapter();
+        // System.out.println("String: " + adp.parseKeyIdToString(this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode())));
         var keyEvent = new ShortcutKeyEvent(
             this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode()),
             clickType
@@ -119,6 +123,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     }
 
     private Boolean hasPartialTrigger(Shortcut shortcut) {
+        // ShortcutKeyIdAdapter adp = new ShortcutKeyIdAdapter();
         for (int i = 0; i < shortcut.trigger.size(); i++) {
             if (shortcut.trigger.size() <= i || this.keysClicked.size() <= i) {
                 continue;
@@ -133,7 +138,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     }
 
     private Boolean isSameKey(ShortcutKeyEvent keyA, ShortcutKeyEvent keyB) {
-        if (keyA.keyId == keyB.keyId && keyA.clickType == keyB.clickType) {
+        if (keyA.keyId.equals(keyB.keyId) && keyA.clickType.equals(keyB.clickType)) {
             return true;
         }
         return false;

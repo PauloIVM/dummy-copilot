@@ -3,11 +3,11 @@ package repositories;
 import java.util.HashMap;
 import entities.shortcut.ShortcutKeyId;
 
-public class KeyIdAdapter {
+public class ShortcutKeyIdAdapter {
     HashMap<Integer, String> keyIdMap;
     HashMap<String, Integer> reverseKeyIdMap;
 
-    KeyIdAdapter() {
+    public ShortcutKeyIdAdapter() {
         this.keyIdMap = new HashMap<>();
         this.reverseKeyIdMap = new HashMap<>();
         this.keyIdMap.put(ShortcutKeyId.VK_ENTER, "enter");
@@ -236,8 +236,8 @@ public class KeyIdAdapter {
         this.reverseKeyIdMap.put("help", ShortcutKeyId.VK_HELP);
         this.keyIdMap.put(ShortcutKeyId.VK_META, "meta");
         this.reverseKeyIdMap.put("meta", ShortcutKeyId.VK_META);
-        this.keyIdMap.put(ShortcutKeyId.VK_BACK_QUOTE, "back_quote");
-        this.reverseKeyIdMap.put("back_quote", ShortcutKeyId.VK_BACK_QUOTE);
+        this.keyIdMap.put(ShortcutKeyId.VK_BACK_QUOTE, "'");
+        this.reverseKeyIdMap.put("'", ShortcutKeyId.VK_BACK_QUOTE);
         this.keyIdMap.put(ShortcutKeyId.VK_QUOTE, "quote");
         this.reverseKeyIdMap.put("quote", ShortcutKeyId.VK_QUOTE);
         this.keyIdMap.put(ShortcutKeyId.VK_KP_UP, "up");

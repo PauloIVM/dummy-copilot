@@ -19,10 +19,10 @@ import java.io.IOException;
 
 
 public class ShortcutsFileParser {
-    private KeyIdAdapter keyAdapter;
+    private ShortcutKeyIdAdapter keyAdapter;
 
     public ShortcutsFileParser() {
-        this.keyAdapter = new KeyIdAdapter();
+        this.keyAdapter = new ShortcutKeyIdAdapter();
     }
 
     public ArrayList<Shortcut> get() {
