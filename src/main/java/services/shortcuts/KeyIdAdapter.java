@@ -3,7 +3,9 @@ import java.util.HashMap;
 import entities.shortcut.ShortcutKeyId;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
-// TODO: Parser esta incompleto... conferir cada uma das minhas teclas
+// TODO: Parser esta incompleto... conferir cada uma das minhas teclas. Um detalhe,
+// os eventos são mapeados no padrão US, e não abnt2... talvez seja interessante
+// documentar isso.
 
 public class KeyIdAdapter {
     private HashMap<Integer, Integer> keyIdMap;

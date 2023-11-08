@@ -51,6 +51,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         GlobalScreen.addNativeKeyListener(this);
         GlobalScreen.addNativeMouseListener(this);
         GlobalScreen.addNativeMouseMotionListener(this);
+        System.out.print("\033[H\033[2J");
     }
 
     public void nativeKeyPressed(NativeKeyEvent e) {

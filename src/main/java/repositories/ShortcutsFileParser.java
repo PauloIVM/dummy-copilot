@@ -53,8 +53,6 @@ public class ShortcutsFileParser {
         return shortcuts;
     }
 
-    // TODO: Parece q isso funcionou... depois vou ter que conferir se quando eu criar
-    // um '.jar' ele vai continuar buscando o json no mesmo diretório...
     private ShortcutFile[] getShortcutsJsonFile() {
         String jsonFileName = "shortcuts.config.json";
         try {
