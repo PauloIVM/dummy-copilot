@@ -17,6 +17,28 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+// TODO: 'mouseMode'. Para fazer a feature do 'mouseMode' de uma forma legal, acho q a
+// solução seria algo do tipo:
+//      - (ctrl+space m) -> action do tipo que ativa um 'mode' (camada), poderia ser:
+// {
+//     "trigger": "ctrl+space m",
+//     "actions": [
+//         { "type": "sequence", "keys": "backspace" },
+//         { "type": "setMode", "mode": "mouse" }
+//     ]
+// }
+//
+// E depois, um outro evento com um "when", que só é executado em um determinado "mode". Os
+// demais eventos, sem o "when", deverão ser executados em qualquer modo.
+//
+// {
+//     "trigger": "left",
+//     "when": { "mode": "mouse" },
+//     "actions": [
+//         { "type": "sequence", "keys": "right" },
+//         { "type": "mouseMove", "direction": "left", "px": 10 }
+//     ]
+// }
 
 public class ShortcutsFileParser {
     private ShortcutKeyIdAdapter keyAdapter;
