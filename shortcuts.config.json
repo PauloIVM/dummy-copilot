@@ -33,5 +33,12 @@
             { "type": "sequence", "keys": "backspace", "repeat": 3 },
             { "type": "paste", "content": "á" }
         ]
+    },
+    {
+        "trigger": "ctrl+space m",
+        "actions": [
+            { "type": "sequence", "keys": "backspace" },
+            { "type": "paste", "content": "TODO: Allow mouse mode" }
+        ]
     }
 ]
