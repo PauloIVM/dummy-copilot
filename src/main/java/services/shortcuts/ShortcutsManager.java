@@ -38,20 +38,34 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         this.robot = robot;
         this.shortcuts = shortcuts;
         this.keyIdAdapter = new KeyIdAdapter();
+    }
 
+    public void initListenner() {
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
         try {
             GlobalScreen.registerNativeHook();
+            GlobalScreen.addNativeKeyListener(this);
+            GlobalScreen.addNativeMouseListener(this);
+            GlobalScreen.addNativeMouseMotionListener(this);
         } catch (NativeHookException ex) {
             System.err.println("There was a problem registering the native hook.");
             System.err.println(ex.getMessage());
             System.exit(1);
         }
-        GlobalScreen.addNativeKeyListener(this);
-        GlobalScreen.addNativeMouseListener(this);
-        GlobalScreen.addNativeMouseMotionListener(this);
-        System.out.print("\033[H\033[2J");
+    }
+
+    public void finishListenner() {
+        try {
+            GlobalScreen.removeNativeKeyListener(this);
+            GlobalScreen.removeNativeMouseListener(this);
+            GlobalScreen.removeNativeMouseMotionListener(this);
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException ex) {
+            System.err.println("There was a problem unregistering the native hook.");
+            System.err.println(ex.getMessage());
+            System.exit(1);
+        }
     }
 
     public void nativeKeyPressed(NativeKeyEvent e) {
