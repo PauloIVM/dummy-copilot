@@ -10,7 +10,7 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 public class KeyIdAdapter {
     private HashMap<Integer, Integer> keyIdMap;
 
-    KeyIdAdapter() {
+    public KeyIdAdapter() {
         this.keyIdMap = new HashMap<>();
         this.keyIdMap.put(NativeKeyEvent.VC_ENTER, ShortcutKeyId.VK_ENTER);
         this.keyIdMap.put(NativeKeyEvent.VC_BACKSPACE, ShortcutKeyId.VK_BACK_SPACE);

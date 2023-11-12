@@ -3,6 +3,7 @@ package views;
 import java.util.Scanner;
 import repositories.ShortcutsFileParser;
 import services.shortcuts.ShortcutsManager;
+import services.keylogger.Keylogger;
 import java.awt.Robot;
 import java.io.Console;
 
@@ -71,6 +72,14 @@ public class Cli {
     }
 
     public void runKeyloggerFrame() {
+        // TODO: Isso pode gerar um leak tbm???
+        Keylogger keylogger = null;
+        try { keylogger = new Keylogger(); } catch (Exception e) {}
+        if (keylogger != null) { keylogger.initListenner(); }
+        if (keylogger == null) {
+            this.clear();
+            this.runInitialFrame();    
+        }
         this.clear();
         this.setGoldColor();
         System.out.println("DummyCopilot");
@@ -81,10 +90,10 @@ public class Cli {
         this.setGoldColor();
         this.hideCursor();
         Console console = System.console();
-        // TODO: Desenvolver uma forma de ficar printando aqui os trem... e apagando...
+        // TODO: Melhorar...
         console.readPassword("-> ");
+        if (keylogger != null) { keylogger.finishListenner(); }
         this.showCursor();
-        // scan.close();
         this.clear();
         this.runInitialFrame();
     }
