@@ -44,9 +44,7 @@ chmod +x FILE_NAME.jar
 ## Planejamento de próximos passos:
 
 - Criar testes automatizados;
-- Criar feature para logar o atalho;
-- Criar CLI;
-- Remover os logs da lib jnativehook;
+- Criar feature para inserir um atalho pelo terminal;
 - Caso não exista um arquivo de configurações, gerar automaticamente;
 - Criar feature para permitir mover o mouse pelo teclado;
 - Criar interface gráfica;
