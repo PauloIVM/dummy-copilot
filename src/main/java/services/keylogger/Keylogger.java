@@ -7,21 +7,22 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 import repositories.ShortcutKeyIdAdapter;
 import services.shortcuts.KeyIdAdapter;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Keylogger implements NativeKeyListener, NativeMouseInputListener {
     private KeyIdAdapter keyIdAdapter;
     private ShortcutKeyIdAdapter shortcutKeyIdAdapter;
-    private ILogger logger;
+    private Consumer<String> onKeyPressed;
 
-    public Keylogger(ILogger logger) throws Exception {
+    public Keylogger(Consumer<String> onKeyPressed) throws Exception {
         this.keyIdAdapter = new KeyIdAdapter();
         this.shortcutKeyIdAdapter = new ShortcutKeyIdAdapter();
-        this.logger = logger;
+        this.onKeyPressed = onKeyPressed;
     }
 
-    public void initListenner() {
+    public void init() {
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
         try {
@@ -36,7 +37,7 @@ public class Keylogger implements NativeKeyListener, NativeMouseInputListener {
         }
     }
 
-    public void finishListenner() {
+    public void stop() {
         try {
             GlobalScreen.removeNativeKeyListener(this);
             GlobalScreen.removeNativeMouseListener(this);
@@ -53,7 +54,7 @@ public class Keylogger implements NativeKeyListener, NativeMouseInputListener {
         String key = this.shortcutKeyIdAdapter.parseKeyIdToString(
             this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode())
         );
-        this.logger.run(key);
+        this.onKeyPressed.accept(key);
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) {}
@@ -63,5 +64,4 @@ public class Keylogger implements NativeKeyListener, NativeMouseInputListener {
     public void nativeMouseReleased(NativeMouseEvent e) {}
     public void nativeMouseMoved(NativeMouseEvent e) {}
     public void nativeMouseDragged(NativeMouseEvent e) {}
-
 }

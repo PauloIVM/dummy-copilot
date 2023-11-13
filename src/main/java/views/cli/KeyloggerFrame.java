@@ -1,5 +1,4 @@
 package views.cli;
-import services.keylogger.ILogger;
 import services.keylogger.Keylogger;
 import java.util.Scanner;
 import java.io.Console;
@@ -7,9 +6,15 @@ import java.io.Console;
 public class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         Keylogger keylogger = null;
-        ILogger logger = new Logger();
-        try { keylogger = new Keylogger(logger); } catch (Exception e) {}
-        if (keylogger != null) { keylogger.initListenner(); }
+        try {
+            keylogger = new Keylogger((String key) -> {
+                System.out.print(String.format("\033[%dA", 1));
+                System.out.print("\033[2K");
+                System.out.print("-> ");
+                System.out.println(key);
+            });
+        } catch (Exception e) {}
+        if (keylogger != null) { keylogger.init(); }
         if (keylogger == null) {
             AnsiUtil.clear();
             return Frame.INITIAL_FRAME;    
@@ -25,7 +30,7 @@ public class KeyloggerFrame implements IFrame {
         AnsiUtil.hideCursor();
         System.out.println("-> ");
         console.readPassword("");
-        if (keylogger != null) { keylogger.finishListenner(); }
+        if (keylogger != null) { keylogger.stop(); }
         AnsiUtil.showCursor();
         AnsiUtil.clear();
         return Frame.INITIAL_FRAME;
