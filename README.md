@@ -2,13 +2,13 @@
 
 Este é um trabalho em progresso para facilitar/automatizar o uso de computadores desktop. Atualmente, ele permite o usuário criar atalhos customizaveis e globais (no nível do sistema operacional), mas outras funcionalidades virão em breve, se Deus quiser.
 
-A ideia nasceu de uma motivação muito simples: Sendo um brasileiro e sempre teclados ABNT2, quando tive meu primeiro notebook com teclado padrão US, a adaptação foi muito ruim, me desagradava muito ter que usar o layout ABNT2 em um teclado US e as teclas todas diferentes do símbolo físico no teclado, e também era bastante chato usar o layout US e não ter teclas para caracteres como "ç", "ê" e etc.
+A ideia nasceu de uma motivação muito simples: Sendo um brasileiro e usando teclados ABNT2, quando tive meu primeiro notebook com teclado padrão US, a adaptação foi muito ruim. Me desagradava muito ter que usar o layout ABNT2 em um teclado US e as teclas todas diferentes do símbolo físico no teclado, e também era bastante chato usar o layout US e não ter teclas para caracteres como "ç", "ê" e etc.
 
-Assim, inicialmente a maior motivação era permitir a criação de atalhos globais para digitar esses caracteres do ABNT2, mas mantendo o layout US do teclado. Você perceberá que o código vêm com alguns atalhos padrões, por exemplo `. c ctrl` irá digitar um `ç`, a menos que você mude ou remova esse atalho.
+Assim, inicialmente a motivação era permitir a criação de atalhos globais para digitar esses caracteres do ABNT2, mas mantendo o layout US do teclado. Você perceberá que o código vêm com alguns atalhos padrões, por exemplo `. c ctrl` irá digitar um `ç`, a menos que você mude ou remova esse atalho.
 
 Com o tempo eu percebi que existem muitas outras automações interessantes, e estou dando uma nova atenção para o projeto. Por exemplo, hoje existem teclados como o `ZFA Planck EZ`, caros, porém com nível de personalização absurda; é possível até mesmo controlar o mouse pelas teclas do teclado; e, eu percebi que grande parte dessas funcionalidades poderiam ser reproduzidas via software por esse programa, sem a necessidade de adquirir um hardware desse calibre e gastando nenhum dinheiro.
 
-O nome `DummyCopilot` é no sentido dele ser um copiloto burro, mas ainda assim útil pois ele irá funcionar independente do editor de texto ou o que for.
+O nome `DummyCopilot` é no sentido dele ser um copiloto 'burro'/'manequim' (tipo um manequim articulado, ele só vai fazer exatamente o que você o configurar para fazer), mas ainda assim útil pois ele irá funcionar independente do editor de texto, OS ou o que for.
 
 Para usar o software também ficou muito simples e com boa compatibilidade nos diversos OS atuais. Seguem as explicações no tópico de instalação.
 
