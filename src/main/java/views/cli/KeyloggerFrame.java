@@ -1,4 +1,5 @@
 package views.cli;
+import services.keylogger.ILogger;
 import services.keylogger.Keylogger;
 import java.util.Scanner;
 import java.io.Console;
@@ -6,7 +7,8 @@ import java.io.Console;
 public class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         Keylogger keylogger = null;
-        try { keylogger = new Keylogger(); } catch (Exception e) {}
+        ILogger logger = new Logger();
+        try { keylogger = new Keylogger(logger); } catch (Exception e) {}
         if (keylogger != null) { keylogger.initListenner(); }
         if (keylogger == null) {
             AnsiUtil.clear();
@@ -21,7 +23,6 @@ public class KeyloggerFrame implements IFrame {
         System.out.println("");
         AnsiUtil.setGoldColor();
         AnsiUtil.hideCursor();
-        // TODO: Melhorar...
         System.out.println("-> ");
         console.readPassword("");
         if (keylogger != null) { keylogger.finishListenner(); }
