@@ -69,6 +69,9 @@ public class Keylogger implements NativeKeyListener, NativeMouseInputListener {
         // TODO: Aqui eu posso pensar em receber um ob "logger" por param, que define o "sout",
         // isso pro service ficar mais simples de testar e genérico. Tbm ficaria legal se eu
         // conseguisse usar uma lambda function.
+        System.out.print(String.format("\033[%dA", 1));
+        System.out.print("\033[2K");
+        System.out.print("-> ");
         System.out.println(this.shortcutKeyIdAdapter.parseKeyIdToString(
             this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode())
         ));

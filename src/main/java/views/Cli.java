@@ -91,7 +91,8 @@ public class Cli {
         this.hideCursor();
         Console console = System.console();
         // TODO: Melhorar...
-        console.readPassword("-> ");
+        System.out.println("-> ");
+        console.readPassword("");
         if (keylogger != null) { keylogger.finishListenner(); }
         this.showCursor();
         this.clear();
