@@ -1,8 +1,8 @@
 package views.cli;
 import java.util.Scanner;
 import repositories.ShortcutsFileParser;
+import services.shortcuts.ShortcutsRobot;
 import services.shortcuts.ShortcutsManager;
-import java.awt.Robot;
 import java.io.Console;
 
 public class ShortcutRunnerFrame implements IFrame {
@@ -10,8 +10,10 @@ public class ShortcutRunnerFrame implements IFrame {
         ShortcutsFileParser shortcutsFileParser = new ShortcutsFileParser();
         ShortcutsManager shortcutsManager = null;
         try {
+            // TODO: Posso criar uma factory q já monta isso pra mim, injeta as dependencias,
+            //  e já faz o tratamento da exception. Inserir o InjectorFactory no código.
             shortcutsManager = new ShortcutsManager(
-                new Robot(),
+                new ShortcutsRobot(),
                 shortcutsFileParser.get()
             );
         } catch (Exception e) {}

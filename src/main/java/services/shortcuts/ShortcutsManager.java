@@ -14,7 +14,6 @@ import entities.shortcut.ShortcutActionType;
 import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
 
-import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -26,12 +25,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShortcutsManager implements NativeKeyListener, NativeMouseInputListener {
-    private final Robot robot;
+    private final IRobot robot;
     private ArrayList<ShortcutKeyEvent> keysClicked;
     private ArrayList<Shortcut> shortcuts;
     private KeyIdAdapter keyIdAdapter;
 
-    public ShortcutsManager(Robot robot, ArrayList<Shortcut> shortcuts) throws Exception {
+    public ShortcutsManager(IRobot robot, ArrayList<Shortcut> shortcuts) throws Exception {
         this.keysClicked = new ArrayList<>();
         this.robot = robot;
         this.shortcuts = shortcuts;
@@ -67,11 +66,11 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     }
 
     public void nativeKeyPressed(NativeKeyEvent e) {
-        this.onKeyPressed(e, ShortcutClickType.DOWN);
+        this.addKeyClicked(e.getKeyCode(), ShortcutClickType.DOWN);
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) {
-        this.onKeyPressed(e, ShortcutClickType.UP);
+        this.addKeyClicked(e.getKeyCode(), ShortcutClickType.UP);
     }
 
     public void nativeKeyTyped(NativeKeyEvent e) {}
@@ -81,9 +80,9 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     public void nativeMouseMoved(NativeMouseEvent e) {}
     public void nativeMouseDragged(NativeMouseEvent e) {}
 
-    private void onKeyPressed(NativeKeyEvent e, ShortcutClickType clickType) {
+    public void addKeyClicked(int nativeHookKeyCode, ShortcutClickType clickType) {
         var keyEvent = new ShortcutKeyEvent(
-            this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode()),
+            this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(nativeHookKeyCode),
             clickType
         );
         this.keysClicked.add(keyEvent);
@@ -100,6 +99,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         if (shortcut.trigger.size() == this.keysClicked.size()) {
             this.keysClicked.clear();
             shortcut.actions.forEach((a) -> {
+                // TODO: Refatorar criando uma classe distinta pra cada action
                 if (a.actionType == ShortcutActionType.PASTE) {
                     ShortcutActionPaste action = (ShortcutActionPaste) a;
                     StringSelection selection = new StringSelection(action.content);

@@ -44,6 +44,9 @@ chmod +x FILE_NAME.jar
 ## Planejamento de próximos passos:
 
 - Criar testes automatizados;
+- Melhorar nomes de classes e métodos em geral;
+- Melhorar tratamento de exeções no código;
+- Inserir o injector-factory no código;
 - Criar feature para inserir um atalho pelo terminal;
 - Caso não exista um arquivo de configurações, gerar automaticamente;
 - Criar feature para permitir mover o mouse pelo teclado;
