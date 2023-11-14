@@ -120,6 +120,14 @@ public class ShortcutManagerTest {
         this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_T, ShortcutClickType.DOWN);
         this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_T, ShortcutClickType.UP);
         this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_CONTROL_R, ShortcutClickType.UP);
+
+        this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_CONTROL_L, ShortcutClickType.DOWN);
+        this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_CONTROL_R, ShortcutClickType.UP);
+        this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_T, ShortcutClickType.DOWN);
+        this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_T, ShortcutClickType.UP);
+        this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_G, ShortcutClickType.DOWN);
+        this.shortcutsManager.addKeyClicked(NativeKeyEvent.VC_G, ShortcutClickType.UP);
+
         int[] expected = {};
         int[] robotKeysTyped = this.toIntArray(this.mockedRobot.getKeysTyped());
         assertArrayEquals(expected, robotKeysTyped);
