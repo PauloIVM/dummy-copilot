@@ -8,17 +8,9 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 
 import entities.shortcut.Shortcut;
-import entities.shortcut.ShortcutActionPaste;
-import entities.shortcut.ShortcutActionSequence;
-import entities.shortcut.ShortcutActionType;
 import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
-
-import java.awt.event.KeyEvent;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.Transferable;
+import services.shortcuts.actions.ActionsManager;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -29,12 +21,17 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     private ArrayList<ShortcutKeyEvent> keysClicked;
     private ArrayList<Shortcut> shortcuts;
     private KeyIdAdapter keyIdAdapter;
+    private ActionsManager actionsManager;
 
     public ShortcutsManager(IRobot robot, ArrayList<Shortcut> shortcuts) throws Exception {
         this.keysClicked = new ArrayList<>();
         this.robot = robot;
         this.shortcuts = shortcuts;
         this.keyIdAdapter = new KeyIdAdapter();
+        // TODO: Padronizar o uso de fatories para injetar essa dependencia. Por hora esta ok,
+        // mas se eu injetar todas as dependencias via factories, facilita muito melhorar os
+        // testes.
+        this.actionsManager = new ActionsManager(this.robot, new ShortcutsClipboard());
     }
 
     public void initListenner() {
@@ -98,36 +95,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         }
         if (shortcut.trigger.size() == this.keysClicked.size()) {
             this.keysClicked.clear();
-            shortcut.actions.forEach((a) -> {
-                // TODO: Refatorar criando uma classe distinta pra cada action
-                if (a.actionType == ShortcutActionType.PASTE) {
-                    ShortcutActionPaste action = (ShortcutActionPaste) a;
-                    StringSelection selection = new StringSelection(action.content);
-                    // TODO: Inverter a dependencia do clipboard pra facilitar os testes
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    Transferable currClipboardData = clipboard.getContents(null);
-                    clipboard.setContents(selection, selection);
-                    this.robot.keyPress(KeyEvent.VK_CONTROL);
-                    this.robot.keyPress(KeyEvent.VK_V);
-                    this.robot.keyRelease(KeyEvent.VK_CONTROL);
-                    this.robot.keyRelease(KeyEvent.VK_V);
-                    this.robot.delay(30);
-                    clipboard.setContents(currClipboardData, null);
-                }
-                if (a.actionType == ShortcutActionType.SEQUENCE) {
-                    ShortcutActionSequence action = (ShortcutActionSequence) a;
-                    for (int i = 0; i < action.repeat; i++) {
-                        action.keysSequence.forEach(key -> {
-                            if (key.clickType == ShortcutClickType.DOWN) {
-                                this.robot.keyPress(key.keyId);
-                            }
-                            if (key.clickType == ShortcutClickType.UP) {
-                                this.robot.keyRelease(key.keyId);
-                            }
-                        });
-                    }
-                }
-            });
+            shortcut.actions.forEach(this.actionsManager::exec);
         }
     }
 
