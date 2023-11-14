@@ -34,7 +34,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         this.actionsManager = new ActionsManager(this.robot, new ShortcutsClipboard());
     }
 
-    public void initListenner() {
+    public void init() {
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
         try {
@@ -49,7 +49,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         }
     }
 
-    public void finishListenner() {
+    public void stop() {
         try {
             GlobalScreen.removeNativeKeyListener(this);
             GlobalScreen.removeNativeMouseListener(this);
@@ -85,7 +85,7 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
         this.keysClicked.add(keyEvent);
         Shortcut shortcut = this.shortcuts
             .stream()
-            .filter((s) -> this.hasPartialTrigger(s))
+            .filter(this::hasPartialTrigger)
             .findFirst()
             .orElse(null);
         if (shortcut == null) {
@@ -100,17 +100,45 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     }
 
     private Boolean hasPartialTrigger(Shortcut shortcut) {
+        Boolean[] fallingEdgeMarkers = this.getFallingEdgeMarkers(shortcut.trigger);
         for (int i = 0; i < shortcut.trigger.size(); i++) {
             if (shortcut.trigger.size() <= i || this.keysClicked.size() <= i) {
                 continue;
             }
             var triggerKey = shortcut.trigger.get(i);
             var currKeyClicked = this.keysClicked.get(i);
+            if (i < fallingEdgeMarkers.length && fallingEdgeMarkers[i]) continue;
             if (this.isSameKey(triggerKey, currKeyClicked) == false) {
                 return false;
             }
         }
         return true;
+    }
+
+    private Boolean[] getFallingEdgeMarkers(ArrayList<ShortcutKeyEvent> trigger) {
+        Boolean[] fallingEdgeMarkers = new Boolean[trigger.size()];
+        for (int i = 0; i < trigger.size(); i++) {
+            if (trigger.get(i).clickType == ShortcutClickType.DOWN) {
+                fallingEdgeMarkers[i] = false;
+                continue;
+            }
+            ShortcutClickType UP = ShortcutClickType.UP;
+            if (i == trigger.size() - 1 && trigger.get(i - 1).clickType == UP) {
+                fallingEdgeMarkers[i] = true;
+                continue;
+            } else if (i == trigger.size() - 1) {
+                fallingEdgeMarkers[i] = false;
+                continue;
+
+            }
+            if (trigger.get(i - 1).clickType == UP || trigger.get(i + 1).clickType == UP) {
+                fallingEdgeMarkers[i] = true;
+                continue;
+            }
+            fallingEdgeMarkers[i] = false;
+
+        }
+        return fallingEdgeMarkers;
     }
 
     private Boolean isSameKey(ShortcutKeyEvent keyA, ShortcutKeyEvent keyB) {

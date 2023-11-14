@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import entities.shortcut.Shortcut;
 import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
-import entities.shortcut.ShortcutKeyId;
 import entities.shortcutfile.ShortcutFile;
 import entities.shortcutfile.ShortcutFileAction;
 
@@ -110,8 +109,6 @@ public class ShortcutsFileParser {
                 continue;
             }
             String[] splittedByPlusChar = splittedBySpace[index].split("\\+");
-            // TODO: Em tese eu deveria fazer o trigger dar o match apenas na borda de
-            // subida, mas não sei exatamente como fazer isso
             for (int j = 0; j < splittedByPlusChar.length; j++) {
                 Integer keyCode = this.keyAdapter.parseStringToKeyId(splittedByPlusChar[j]);
                 keyEvent.add(new ShortcutKeyEvent(keyCode, ShortcutClickType.DOWN));

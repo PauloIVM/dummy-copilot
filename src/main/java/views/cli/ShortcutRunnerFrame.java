@@ -18,7 +18,7 @@ public class ShortcutRunnerFrame implements IFrame {
             );
         } catch (Exception e) {}
         if (shortcutsManager != null) {
-            shortcutsManager.initListenner();
+            shortcutsManager.init();
         }
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();
@@ -34,7 +34,7 @@ public class ShortcutRunnerFrame implements IFrame {
         AnsiUtil.setPurpleColor();
         String in = scan.next();
         if (shortcutsManager != null) {
-            shortcutsManager.finishListenner();
+            shortcutsManager.stop();
         }
         if (in.equals("1")) {
             AnsiUtil.clear();
