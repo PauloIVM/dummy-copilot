@@ -1,4 +1,4 @@
-package services.shortcuts;
+package services.shortcuts_manager;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.StringSelection;
 

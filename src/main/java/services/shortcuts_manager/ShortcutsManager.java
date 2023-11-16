@@ -1,4 +1,4 @@
-package services.shortcuts;
+package services.shortcuts_manager;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -10,7 +10,7 @@ import org.jnativehook.mouse.NativeMouseInputListener;
 import entities.shortcut.Shortcut;
 import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
-import services.shortcuts.actions.ActionsManager;
+import services.shortcuts_manager.actions.ActionsManager;
 import utils.KeyIdAdapter;
 
 import java.util.ArrayList;

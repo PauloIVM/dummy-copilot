@@ -1,4 +1,4 @@
-package services.shortcuts;
+package services.shortcuts_manager;
 import java.awt.Robot;
 
 public class ShortcutsRobot extends Robot implements IRobot {

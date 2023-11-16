@@ -13,6 +13,7 @@ import entities.shortcut.Shortcut;
 import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
 import entities.shortcut.ShortcutKeyId;
+import services.shortcuts_manager.ShortcutsManager;
 
 public class ShortcutManagerTest {
     ShortcutsManager shortcutsManager;

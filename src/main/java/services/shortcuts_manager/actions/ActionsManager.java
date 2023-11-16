@@ -1,11 +1,11 @@
-package services.shortcuts.actions;
+package services.shortcuts_manager.actions;
 
 import entities.shortcut.ShortcutAction;
 import entities.shortcut.ShortcutActionPaste;
 import entities.shortcut.ShortcutActionSequence;
 import entities.shortcut.ShortcutActionType;
-import services.shortcuts.IClipboard;
-import services.shortcuts.IRobot;
+import services.shortcuts_manager.IClipboard;
+import services.shortcuts_manager.IRobot;
 
 public class ActionsManager {
     private final IRobot robot;

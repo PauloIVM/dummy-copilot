@@ -1,8 +1,9 @@
 package views.cli;
 import java.util.Scanner;
 import repositories.ShortcutsFileParser;
-import services.shortcuts.ShortcutsRobot;
-import services.shortcuts.ShortcutsManager;
+import services.shortcuts_manager.ShortcutsManager;
+import services.shortcuts_manager.ShortcutsRobot;
+
 import java.io.Console;
 
 public class ShortcutRunnerFrame implements IFrame {

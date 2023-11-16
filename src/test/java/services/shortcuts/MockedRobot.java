@@ -1,6 +1,8 @@
 package services.shortcuts;
 import java.util.ArrayList;
 
+import services.shortcuts_manager.IRobot;
+
 public class MockedRobot implements IRobot {
     private ArrayList<Integer> keysTyped;
 

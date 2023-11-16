@@ -1,8 +1,8 @@
-package services.shortcuts.actions;
+package services.shortcuts_manager.actions;
 
 import entities.shortcut.ShortcutActionSequence;
 import entities.shortcut.ShortcutClickType;
-import services.shortcuts.IRobot;
+import services.shortcuts_manager.IRobot;
 
 public class ActionSequence {
     static void exec(ShortcutActionSequence action, IRobot robot) {

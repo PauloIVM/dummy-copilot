@@ -1,4 +1,4 @@
-package services.shortcuts;
+package services.shortcuts_manager;
 
 public interface IRobot {
     void keyPress(int keycode);
