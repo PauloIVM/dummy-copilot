@@ -46,6 +46,7 @@ chmod +x FILE_NAME.jar
 - Criar testes automatizados;
 - Melhorar nomes de classes e métodos em geral;
 - Melhorar tratamento de exeções no código;
+- Melhorar a visibilidade dos pacotes, acabou ficando quase tudo public;
 - Inserir o injector-factory no código;
 - Criar feature para inserir um atalho pelo terminal;
 - Caso não exista um arquivo de configurações, gerar automaticamente;
