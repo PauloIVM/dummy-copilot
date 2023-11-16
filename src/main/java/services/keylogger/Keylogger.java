@@ -5,20 +5,16 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
-import repositories.ShortcutKeyIdAdapter;
-import services.shortcuts.KeyIdAdapter;
+import utils.KeyIdAdapter;
+
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Keylogger implements NativeKeyListener, NativeMouseInputListener {
-    private KeyIdAdapter keyIdAdapter;
-    private ShortcutKeyIdAdapter shortcutKeyIdAdapter;
     private Consumer<String> onKeyPressed;
 
     public Keylogger(Consumer<String> onKeyPressed) throws Exception {
-        this.keyIdAdapter = new KeyIdAdapter();
-        this.shortcutKeyIdAdapter = new ShortcutKeyIdAdapter();
         this.onKeyPressed = onKeyPressed;
     }
 
@@ -51,9 +47,7 @@ public class Keylogger implements NativeKeyListener, NativeMouseInputListener {
     }
 
     public void nativeKeyPressed(NativeKeyEvent e) {
-        String key = this.shortcutKeyIdAdapter.parseKeyIdToString(
-            this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(e.getKeyCode())
-        );
+        String key = KeyIdAdapter.parseJNativeKeyIdToText(e.getKeyCode());
         this.onKeyPressed.accept(key);
     }
 

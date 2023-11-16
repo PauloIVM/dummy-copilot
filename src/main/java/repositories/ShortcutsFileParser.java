@@ -5,6 +5,7 @@ import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
 import entities.shortcutfile.ShortcutFile;
 import entities.shortcutfile.ShortcutFileAction;
+import utils.KeyIdAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -40,11 +41,8 @@ import java.io.IOException;
 // }
 
 public class ShortcutsFileParser {
-    private ShortcutKeyIdAdapter keyAdapter;
 
-    public ShortcutsFileParser() {
-        this.keyAdapter = new ShortcutKeyIdAdapter();
-    }
+    public ShortcutsFileParser() {}
 
     public ArrayList<Shortcut> get() {
         ShortcutFile[] shortcutsFile = this.getShortcutsJsonFile();
@@ -103,18 +101,18 @@ public class ShortcutsFileParser {
             // TODO: Esse código está meio ruim. Aparentemente eu posso simplesmente eliminar
             // esse if a seguir. Criar testes automatizados e melhorar. 
             if (splittedBySpace[index].length() == 1) {
-                Integer keyCode = this.keyAdapter.parseStringToKeyId(splittedBySpace[index]);
+                Integer keyCode = KeyIdAdapter.parseTextToShortcutKeyId(splittedBySpace[index]);
                 keyEvent.add(new ShortcutKeyEvent(keyCode, ShortcutClickType.DOWN));
                 keyEvent.add(new ShortcutKeyEvent(keyCode, ShortcutClickType.UP));
                 continue;
             }
             String[] splittedByPlusChar = splittedBySpace[index].split("\\+");
             for (int j = 0; j < splittedByPlusChar.length; j++) {
-                Integer keyCode = this.keyAdapter.parseStringToKeyId(splittedByPlusChar[j]);
+                Integer keyCode = KeyIdAdapter.parseTextToShortcutKeyId(splittedByPlusChar[j]);
                 keyEvent.add(new ShortcutKeyEvent(keyCode, ShortcutClickType.DOWN));
             }
             for (int j = 0; j < splittedByPlusChar.length; j++) {
-                Integer keyCode = this.keyAdapter.parseStringToKeyId(splittedByPlusChar[j]);
+                Integer keyCode = KeyIdAdapter.parseTextToShortcutKeyId(splittedByPlusChar[j]);
                 keyEvent.add(new ShortcutKeyEvent(keyCode, ShortcutClickType.UP));
             }
         }

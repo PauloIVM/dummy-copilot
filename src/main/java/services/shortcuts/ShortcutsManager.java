@@ -11,6 +11,7 @@ import entities.shortcut.Shortcut;
 import entities.shortcut.ShortcutClickType;
 import entities.shortcut.ShortcutKeyEvent;
 import services.shortcuts.actions.ActionsManager;
+import utils.KeyIdAdapter;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,14 +21,12 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     private final IRobot robot;
     private ArrayList<ShortcutKeyEvent> keysClicked;
     private ArrayList<Shortcut> shortcuts;
-    private KeyIdAdapter keyIdAdapter;
     private ActionsManager actionsManager;
 
     public ShortcutsManager(IRobot robot, ArrayList<Shortcut> shortcuts) throws Exception {
         this.keysClicked = new ArrayList<>();
         this.robot = robot;
         this.shortcuts = shortcuts;
-        this.keyIdAdapter = new KeyIdAdapter();
         // TODO: Padronizar o uso de fatories para injetar essa dependencia. Por hora esta ok,
         // mas se eu injetar todas as dependencias via factories, facilita muito melhorar os
         // testes.
@@ -77,9 +76,9 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     public void nativeMouseMoved(NativeMouseEvent e) {}
     public void nativeMouseDragged(NativeMouseEvent e) {}
 
-    public void addKeyClicked(int nativeHookKeyCode, ShortcutClickType clickType) {
+    public void addKeyClicked(int jNativeKeyId, ShortcutClickType clickType) {
         var keyEvent = new ShortcutKeyEvent(
-            this.keyIdAdapter.parseShortcutKeyIdToNativeKeyId(nativeHookKeyCode),
+            KeyIdAdapter.parseJNativeKeyIdToShortcutKeyId(jNativeKeyId),
             clickType
         );
         this.keysClicked.add(keyEvent);
