@@ -23,13 +23,10 @@ public class ShortcutsManager implements NativeKeyListener, NativeMouseInputList
     private ArrayList<Shortcut> shortcuts;
     private ActionsManager actionsManager;
 
-    public ShortcutsManager(IRobot robot, ArrayList<Shortcut> shortcuts) throws Exception {
+    public ShortcutsManager(IRobot robot, ArrayList<Shortcut> shortcuts) {
         this.keysClicked = new ArrayList<>();
         this.robot = robot;
         this.shortcuts = shortcuts;
-        // TODO: Padronizar o uso de fatories para injetar essa dependencia. Por hora esta ok,
-        // mas se eu injetar todas as dependencias via factories, facilita muito melhorar os
-        // testes.
         this.actionsManager = new ActionsManager(this.robot, new ShortcutsClipboard());
     }
 

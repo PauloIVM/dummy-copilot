@@ -1,26 +1,17 @@
 package views.cli;
 import java.util.Scanner;
-import repositories.ShortcutsFileParser;
 import services.shortcuts_manager.ShortcutsManager;
-import services.shortcuts_manager.ShortcutsRobot;
+import services.shortcuts_manager.ShortcutsManagerBuilder;
 
 import java.io.Console;
 
 public class ShortcutRunnerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        ShortcutsFileParser shortcutsFileParser = new ShortcutsFileParser();
-        ShortcutsManager shortcutsManager = null;
-        try {
-            // TODO: Posso criar uma factory q já monta isso pra mim, injeta as dependencias,
-            //  e já faz o tratamento da exception. Inserir o InjectorFactory no código.
-            shortcutsManager = new ShortcutsManager(
-                new ShortcutsRobot(),
-                shortcutsFileParser.get()
-            );
-        } catch (Exception e) {}
-        if (shortcutsManager != null) {
-            shortcutsManager.init();
-        }
+        ShortcutsManager shortcutsManager = new ShortcutsManagerBuilder()
+            .buildRobot()
+            .loadShortcuts()
+            .build();
+        shortcutsManager.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();
         System.out.println("DummyCopilot");
