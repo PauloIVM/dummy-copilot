@@ -1,17 +1,20 @@
 package views.cli;
 import java.util.Scanner;
-import services.shortcuts_manager.ShortcutsManager;
-import services.shortcuts_manager.ShortcutsManagerBuilder;
+import adapters.shortcuts.ShortcutsController;
+import infra.robot.Robot;
+import infra.keylistenner.Keylistenner;
+import infra.shortcutsfile.ShortcutsFileParser;
 
 import java.io.Console;
 
 public class ShortcutRunnerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        ShortcutsManager shortcutsManager = new ShortcutsManagerBuilder()
-            .buildRobot()
-            .loadShortcuts()
-            .build();
-        shortcutsManager.init();
+        ShortcutsController shortcutsController = new ShortcutsController(
+            new Robot(),
+            new Keylistenner(),
+            new ShortcutsFileParser()
+        );
+        shortcutsController.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();
         System.out.println("DummyCopilot");
@@ -25,9 +28,7 @@ public class ShortcutRunnerFrame implements IFrame {
         System.out.print("Enter the number of one of the options above -> ");
         AnsiUtil.setPurpleColor();
         String in = scan.next();
-        if (shortcutsManager != null) {
-            shortcutsManager.stop();
-        }
+        shortcutsController.stop();
         if (in.equals("1")) {
             AnsiUtil.clear();
             return Frame.INITIAL_FRAME;

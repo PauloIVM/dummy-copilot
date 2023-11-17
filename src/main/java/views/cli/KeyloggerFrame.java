@@ -1,24 +1,24 @@
 package views.cli;
-import services.keylogger.Keylogger;
+import adapters.keylogger.Keylogger;
+import infra.keylistenner.Keylistenner;
 import java.util.Scanner;
 import java.io.Console;
+import java.util.function.Consumer;
 
 public class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        Keylogger keylogger = null;
-        try {
-            keylogger = new Keylogger((String key) -> {
-                System.out.print(String.format("\033[%dA", 1));
-                System.out.print("\033[2K");
-                System.out.print("-> ");
-                System.out.println(key);
-            });
-        } catch (Exception e) {}
-        if (keylogger != null) { keylogger.init(); }
-        if (keylogger == null) {
-            AnsiUtil.clear();
-            return Frame.INITIAL_FRAME;    
-        }
+        // TODO Criar composers para facilitar instanciação desses caras:
+        Consumer<String> onKeyPressed = (String key) -> {
+            System.out.print(String.format("\033[%dA", 1));
+            System.out.print("\033[2K");
+            System.out.print("-> ");
+            System.out.println(key);
+        };
+        Keylistenner keylistenner = new Keylistenner();
+        Keylogger keylogger = new Keylogger()
+            .setConsumer(onKeyPressed)
+            .setKeylistenner(keylistenner);
+        keylogger.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();
         System.out.println("DummyCopilot");
@@ -30,7 +30,7 @@ public class KeyloggerFrame implements IFrame {
         AnsiUtil.hideCursor();
         System.out.println("-> ");
         console.readPassword("");
-        if (keylogger != null) { keylogger.stop(); }
+        keylogger.stop();
         AnsiUtil.showCursor();
         AnsiUtil.clear();
         return Frame.INITIAL_FRAME;
