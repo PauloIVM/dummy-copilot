@@ -2,7 +2,7 @@ package infra.keylistenner;
 import java.util.HashMap;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
-import entities.key_id.KeyId;
+import entities.keyId.KeyId;
 
 public class JNativeKeyIdAdapter {
     static private HashMap<Integer, Integer> jNativeKeyIdToshortcutKeyIdMap;

@@ -1,5 +1,5 @@
 package views.cli;
-import adapters.keylogger.Keylogger;
+import adapters.keylogger.KeyloggerController;
 import infra.keylistenner.Keylistenner;
 import java.util.Scanner;
 import java.io.Console;
@@ -15,7 +15,7 @@ public class KeyloggerFrame implements IFrame {
             System.out.println(key);
         };
         Keylistenner keylistenner = new Keylistenner();
-        Keylogger keylogger = new Keylogger()
+        KeyloggerController keylogger = new KeyloggerController()
             .setConsumer(onKeyPressed)
             .setKeylistenner(keylistenner);
         keylogger.init();

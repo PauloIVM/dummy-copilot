@@ -5,8 +5,8 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 import adapters.interfaces.IKeylistenner;
-import entities.click_type.ClickType;
-import entities.key_event.KeyEvent;
+import entities.clickType.ClickType;
+import entities.keyEvent.KeyEvent;
 
 import java.util.function.Consumer;
 import java.util.logging.Level;

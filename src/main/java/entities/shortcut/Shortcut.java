@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import entities.action.Action;
 import entities.action.ActionPaste;
 import entities.action.ActionSequence;
-import entities.click_type.ClickType;
-import entities.key_event.KeyEvent;
+import entities.clickType.ClickType;
+import entities.keyEvent.KeyEvent;
 
 public class Shortcut {
     public final ArrayList<KeyEvent> trigger;

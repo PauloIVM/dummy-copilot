@@ -1,3 +1,3 @@
-package entities.click_type;
+package entities.clickType;
 
 public enum ClickType { DOWN, UP }

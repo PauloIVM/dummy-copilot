@@ -2,9 +2,9 @@ package infra.shortcutsfile;
 import java.util.ArrayList;
 
 import adapters.interfaces.IShortcutsFileParser;
-import adapters.key_id_adapter.KeyIdAdapter;
-import entities.click_type.ClickType;
-import entities.key_event.KeyEvent;
+import adapters.keyId.KeyIdAdapter;
+import entities.clickType.ClickType;
+import entities.keyEvent.KeyEvent;
 import entities.shortcut.Shortcut;
 
 import com.google.gson.Gson;

@@ -1,4 +1,4 @@
-package entities.key_id;
+package entities.keyId;
 
 public class KeyId {
     public static final int VK_ENTER = 10;

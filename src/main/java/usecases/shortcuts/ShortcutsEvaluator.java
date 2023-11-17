@@ -1,9 +1,9 @@
-package usecases.shortcuts_evaluator;
+package usecases.shortcuts;
 
 import java.util.ArrayList;
 
-import entities.click_type.ClickType;
-import entities.key_event.KeyEvent;
+import entities.clickType.ClickType;
+import entities.keyEvent.KeyEvent;
 import entities.shortcut.Shortcut;
 
 public class ShortcutsEvaluator {
@@ -36,7 +36,6 @@ public class ShortcutsEvaluator {
         if (shortcut.trigger.size() == this.keysClicked.size()) {
             this.keysClicked.clear();
             this.triggeredShortcut = shortcut;
-            // shortcut.actions.forEach(this.actionsManager::exec);
         }
     }
 

@@ -1,7 +1,7 @@
-package adapters.key_id_adapter;
+package adapters.keyId;
 import java.util.HashMap;
 
-import entities.key_id.KeyId;
+import entities.keyId.KeyId;
 
 public class KeyIdAdapter {
     static private HashMap<Integer, String> shortcutKeyIdToTextMap;

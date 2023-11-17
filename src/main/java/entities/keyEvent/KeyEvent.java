@@ -1,5 +1,5 @@
-package entities.key_event;
-import entities.click_type.ClickType;
+package entities.keyEvent;
+import entities.clickType.ClickType;
 
 public class KeyEvent {
     public final Integer keyId;

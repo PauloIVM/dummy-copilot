@@ -3,21 +3,21 @@ package adapters.keylogger;
 import java.util.function.Consumer;
 
 import adapters.interfaces.IKeylistenner;
-import adapters.key_id_adapter.KeyIdAdapter;
-import entities.key_event.KeyEvent;
+import adapters.keyId.KeyIdAdapter;
+import entities.keyEvent.KeyEvent;
 
-public class Keylogger {
+public class KeyloggerController {
     private Consumer<String> onKeyPressed;
     private IKeylistenner keylistenner;
 
-    public Keylogger() {}
+    public KeyloggerController() {}
 
-    public Keylogger setKeylistenner(IKeylistenner keylistenner) {
+    public KeyloggerController setKeylistenner(IKeylistenner keylistenner) {
         this.keylistenner = keylistenner;
         return this;
     }
 
-    public Keylogger setConsumer(Consumer<String> onKeyPressed) {
+    public KeyloggerController setConsumer(Consumer<String> onKeyPressed) {
         this.onKeyPressed = onKeyPressed;
         return this;
     }

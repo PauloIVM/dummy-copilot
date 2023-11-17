@@ -1,7 +1,7 @@
-package usecases.actions_executor;
+package usecases.actions;
 
 import entities.action.ActionSequence;
-import entities.click_type.ClickType;
+import entities.clickType.ClickType;
 
 class ActionSequenceMethod {
     static void exec(ActionSequence action, IRobot robot) {

@@ -1,7 +1,9 @@
 package infra.robot;
 
-import usecases.actions_executor.IRobot;
 import java.awt.event.KeyEvent;
+
+import usecases.actions.IRobot;
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;

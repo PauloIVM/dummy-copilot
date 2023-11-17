@@ -1,7 +1,7 @@
 package entities.action;
 import java.util.ArrayList;
 
-import entities.key_event.KeyEvent;
+import entities.keyEvent.KeyEvent;
 
 public class ActionSequence extends Action {
     public Integer repeat;
