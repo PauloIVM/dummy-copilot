@@ -20,6 +20,14 @@ public class ShortcutsEvaluator {
         return this.triggeredShortcut;
     }
 
+    public Boolean hasShortcutTriggered() {
+        return this.triggeredShortcut != null;
+    }
+
+    public void addKeyClicked(Integer keyId, ClickType clickType) {
+        this.addKeyClicked(new KeyEvent(keyId, clickType));
+    }
+
     public void addKeyClicked(KeyEvent keyEvent) {
         this.triggeredShortcut = null;
         this.keysClicked.add(keyEvent);
