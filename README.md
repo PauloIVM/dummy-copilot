@@ -44,12 +44,60 @@ chmod +x FILE_NAME.jar
 ## Planejamento de próximos passos:
 
 - Criar testes automatizados;
-- Melhorar nomes de classes e métodos em geral;
-- Melhorar tratamento de exeções no código;
+- Dar sequência no desenvolvimento do readme (Estrutura do Projeto);
 - Melhorar a visibilidade dos pacotes, acabou ficando quase tudo public;
-- Inserir o injector-factory no código;
 - Criar feature para inserir um atalho pelo terminal;
 - Caso não exista um arquivo de configurações, gerar automaticamente;
-- Criar feature para permitir mover o mouse pelo teclado;
+- Criar feature para permitir mover o mouse pelo teclado; ex.:
+    { "trigger": "ctrl+space m", "actions": [{ "type": "setMode", "mode": "mouse" }] }
+    {
+        "trigger": "left", "when": { "mode": "mouse" },
+        "actions": [{"type": "mouseMove", "direction": "left", "px": 10 }]
+    }
 - Criar interface gráfica;
 - Criar um analytics que me mostra dados como: média de velocidade de digitção ao longo dos dias; palavras mais digitadas; atalhos existentes que poderiam estar sendo usados e não foram; etc... 
+
+## Estrutura do Projeto
+
+![image](./assets/CleanArchitecture.jpg)
+
+O projeto tem uma estrutura baseada no Clean-Architecture; onde tentei isolar o domínio em entidades e usecases, como sendo as duas camadas de mais alto nível, e abstraindo os demais detalhes como acessos ao OS, arquivos e etc para camadas externas de baixo nível.
+
+### Entities (Business Rules)
+
+Estes são os objetos do domínio da aplicação. Todas as regras de negócios se baseiam nestas entidades.
+
+- Shortcut;
+- Action;
+- ClickType;
+- KeyEvent;
+- KeyId;
+
+### Usecases (Application Business Rules)
+
+Aqui temos as principais regras de negócio (por enquanto poucas).
+
+Basicamente o `ShortcutsEvaluator` é responsável por nos retornar se um atalho foi disparado ou não, baseado em uma entrada de teclas clicadas.
+
+O `ActionsExecutor` é responsável por executar todas as entidades `actions` q possam existir, baseado num identificador de cada respectiva action.
+
+- ActionsExecutor;
+- ShortcutsEvaluator;
+
+### Adapters (Interface Adapters)
+
+Esta camada faz uma ponte entre a infra e os usecases. Aqui por hora temos adapters e controllers. 
+
+O `KeyIdAdapter` é responsável por mapear a entidade `KeyId` para texto e vice-versa; sendo útil em especial para representar visualmente os atalhos num json ou no terminal.
+
+- KeyIdAdapter;
+- KeyloggerController;
+- ShortcutsController;
+
+### Infra (Libs, OS, Drivers...)
+
+- KeyListenner;
+- Robot;
+- ShortcutsFile;
+- composers;
+- views (CLI);
