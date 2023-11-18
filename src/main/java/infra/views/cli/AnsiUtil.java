@@ -1,4 +1,4 @@
-package views.cli;
+package infra.views.cli;
 
 public class AnsiUtil {
     static void clear() {

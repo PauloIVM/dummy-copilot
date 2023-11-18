@@ -1,4 +1,4 @@
-package views.cli;
+package infra.views.cli;
 import java.util.Scanner;
 import java.io.Console;
 

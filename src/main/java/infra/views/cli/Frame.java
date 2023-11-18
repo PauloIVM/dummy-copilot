@@ -1,4 +1,4 @@
-package views.cli;
+package infra.views.cli;
 
 public enum Frame {
     INITIAL_FRAME,

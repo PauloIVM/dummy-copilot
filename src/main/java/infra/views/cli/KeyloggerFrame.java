@@ -1,4 +1,4 @@
-package views.cli;
+package infra.views.cli;
 import adapters.keylogger.KeyloggerController;
 import infra.keylistenner.Keylistenner;
 import java.util.Scanner;
