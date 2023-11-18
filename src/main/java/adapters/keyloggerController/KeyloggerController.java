@@ -9,16 +9,9 @@ public class KeyloggerController {
     private Consumer<String> onKeyPressed;
     private IKeylistenner keylistenner;
 
-    public KeyloggerController() {}
-
-    public KeyloggerController setKeylistenner(IKeylistenner keylistenner) {
+    public KeyloggerController(IKeylistenner keylistenner, Consumer<String> onKeyPressed) {
         this.keylistenner = keylistenner;
-        return this;
-    }
-
-    public KeyloggerController setConsumer(Consumer<String> onKeyPressed) {
         this.onKeyPressed = onKeyPressed;
-        return this;
     }
 
     public void init() {

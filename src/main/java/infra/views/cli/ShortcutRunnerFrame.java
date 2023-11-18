@@ -1,20 +1,12 @@
 package infra.views.cli;
+
 import java.util.Scanner;
-
-import adapters.shortcutsController.ShortcutsController;
-import infra.robot.Robot;
-import infra.keylistenner.Keylistenner;
-import infra.shortcutsfile.ShortcutsFileParser;
-
 import java.io.Console;
+import infra.composers.ShortcutsControllerBuilder;
 
 public class ShortcutRunnerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        ShortcutsController shortcutsController = new ShortcutsController(
-            new Robot(),
-            new Keylistenner(),
-            new ShortcutsFileParser()
-        );
+        var shortcutsController = new ShortcutsControllerBuilder().build();
         shortcutsController.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();

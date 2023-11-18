@@ -1,24 +1,19 @@
 package infra.views.cli;
-import infra.keylistenner.Keylistenner;
+
 import java.util.Scanner;
 import java.io.Console;
 import java.util.function.Consumer;
-
-import adapters.keyloggerController.KeyloggerController;
+import infra.composers.KeyloggerControllerBuilder;
 
 public class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        // TODO Criar composers para facilitar instanciação desses caras:
         Consumer<String> onKeyPressed = (String key) -> {
             System.out.print(String.format("\033[%dA", 1));
             System.out.print("\033[2K");
             System.out.print("-> ");
             System.out.println(key);
         };
-        Keylistenner keylistenner = new Keylistenner();
-        KeyloggerController keylogger = new KeyloggerController()
-            .setConsumer(onKeyPressed)
-            .setKeylistenner(keylistenner);
+        var keylogger = new KeyloggerControllerBuilder(onKeyPressed).build();
         keylogger.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();
