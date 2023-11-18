@@ -2,7 +2,7 @@ package infra.robot;
 
 import java.awt.event.KeyEvent;
 
-import usecases.actions.IRobot;
+import usecases.actionsExecutor.IRobot;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;

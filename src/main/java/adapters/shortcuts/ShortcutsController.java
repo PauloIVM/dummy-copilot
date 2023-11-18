@@ -3,9 +3,9 @@ package adapters.shortcuts;
 import adapters.interfaces.IKeylistenner;
 import adapters.interfaces.IShortcutsFileParser;
 import entities.keyEvent.KeyEvent;
-import usecases.actions.ActionsExecutor;
-import usecases.actions.IRobot;
-import usecases.shortcuts.ShortcutsEvaluator;
+import usecases.actionsExecutor.ActionsExecutor;
+import usecases.actionsExecutor.IRobot;
+import usecases.shortcutsEvaluator.ShortcutsEvaluator;
 
 public class ShortcutsController {
     private IKeylistenner keylistenner;

@@ -1,4 +1,4 @@
-package usecases.actions;
+package usecases.actionsExecutor;
 
 import entities.action.ActionSequence;
 import entities.clickType.ClickType;
