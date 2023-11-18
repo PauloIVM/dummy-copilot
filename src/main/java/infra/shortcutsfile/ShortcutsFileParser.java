@@ -2,7 +2,7 @@ package infra.shortcutsfile;
 import java.util.ArrayList;
 
 import adapters.interfaces.IShortcutsFileParser;
-import adapters.keyId.KeyIdAdapter;
+import adapters.keyIdAdapter.KeyIdAdapter;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.shortcut.Shortcut;

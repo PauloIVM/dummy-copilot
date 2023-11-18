@@ -1,7 +1,6 @@
 package entities.shortcut;
 
 import java.util.ArrayList;
-
 import entities.action.Action;
 import entities.action.ActionPaste;
 import entities.action.ActionSequence;

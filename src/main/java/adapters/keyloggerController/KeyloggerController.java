@@ -1,9 +1,8 @@
-package adapters.keylogger;
+package adapters.keyloggerController;
 
 import java.util.function.Consumer;
-
 import adapters.interfaces.IKeylistenner;
-import adapters.keyId.KeyIdAdapter;
+import adapters.keyIdAdapter.KeyIdAdapter;
 import entities.keyEvent.KeyEvent;
 
 public class KeyloggerController {

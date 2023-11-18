@@ -1,7 +1,6 @@
 package adapters.interfaces;
 
 import java.util.function.Consumer;
-
 import entities.keyEvent.KeyEvent;
 
 public interface IKeylistenner {

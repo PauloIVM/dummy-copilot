@@ -1,5 +1,7 @@
 package entities.keyId;
 
+// TODO: Tem muitos lugares que eu tenho uma variável int keyId. Talvez o melhor
+// seja eu transformar esse cara aqui num enum e reforçar a tipagem no projeto.
 public class KeyId {
     public static final int VK_ENTER = 10;
     public static final int VK_BACK_SPACE = 8;

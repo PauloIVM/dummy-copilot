@@ -1,6 +1,5 @@
 package entities.action;
 import java.util.ArrayList;
-
 import entities.keyEvent.KeyEvent;
 
 public class ActionSequence extends Action {

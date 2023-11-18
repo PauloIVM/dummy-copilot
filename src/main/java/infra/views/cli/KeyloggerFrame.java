@@ -1,9 +1,10 @@
 package infra.views.cli;
-import adapters.keylogger.KeyloggerController;
 import infra.keylistenner.Keylistenner;
 import java.util.Scanner;
 import java.io.Console;
 import java.util.function.Consumer;
+
+import adapters.keyloggerController.KeyloggerController;
 
 public class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {

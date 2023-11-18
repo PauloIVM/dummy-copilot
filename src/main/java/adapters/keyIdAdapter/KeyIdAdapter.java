@@ -1,6 +1,6 @@
-package adapters.keyId;
-import java.util.HashMap;
+package adapters.keyIdAdapter;
 
+import java.util.HashMap;
 import entities.keyId.KeyId;
 
 public class KeyIdAdapter {

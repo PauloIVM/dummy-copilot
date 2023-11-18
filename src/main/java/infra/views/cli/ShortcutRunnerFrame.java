@@ -1,6 +1,7 @@
 package infra.views.cli;
 import java.util.Scanner;
-import adapters.shortcuts.ShortcutsController;
+
+import adapters.shortcutsController.ShortcutsController;
 import infra.robot.Robot;
 import infra.keylistenner.Keylistenner;
 import infra.shortcutsfile.ShortcutsFileParser;

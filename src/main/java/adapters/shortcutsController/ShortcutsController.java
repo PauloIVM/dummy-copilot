@@ -1,4 +1,4 @@
-package adapters.shortcuts;
+package adapters.shortcutsController;
 
 import adapters.interfaces.IKeylistenner;
 import adapters.interfaces.IShortcutsFileParser;
