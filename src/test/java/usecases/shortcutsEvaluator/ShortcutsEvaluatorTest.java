@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import entities.shortcut.Shortcut;
 import entities.clickType.ClickType;
-import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;
 
 public class ShortcutsEvaluatorTest {
@@ -22,12 +21,7 @@ public class ShortcutsEvaluatorTest {
             .addTriggerKey(KeyId.VK_CONTROL, ClickType.UP)
             .addTriggerKey(KeyId.VK_T, ClickType.UP)
             .addTriggerKey(KeyId.VK_G, ClickType.DOWN)
-            .addTriggerKey(KeyId.VK_G, ClickType.UP)
-            .addAction(
-                2,
-                new KeyEvent(KeyId.VK_BACK_SPACE, ClickType.DOWN),
-                new KeyEvent(KeyId.VK_BACK_SPACE, ClickType.UP)
-            );
+            .addTriggerKey(KeyId.VK_G, ClickType.UP);
         ArrayList<Shortcut> shortcuts = new ArrayList<Shortcut>();
         shortcuts.add(shortcut);
         this.shortcutsEvaluator = new ShortcutsEvaluator(shortcuts);
