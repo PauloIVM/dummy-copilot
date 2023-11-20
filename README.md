@@ -2,7 +2,7 @@
 
 ## 1.Introdução
 
-Este é um trabalho em progresso para facilitar/automatizar a digitação ou uso em geral de computadores desktop. Atualmente, ele permite o usuário criar atalhos customizáveis e globais (no nível do sistema operacional), mas outras funcionalidades virão em breve, se Deus quiser.
+Este é um trabalho em progresso para facilitar/automatizar a digitação ou uso em geral de computadores desktop. Atualmente, ele permite o usuário criar atalhos customizáveis e globais (no nível do sistema operacional). Outras funcionalidades virão em breve, se Deus quiser.
 
 ### 1.1.Motivação
 
