@@ -6,6 +6,7 @@ import entities.action.ActionPaste;
 import entities.action.ActionSequence;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
+import entities.keyId.KeyId;
 
 public class Shortcut {
     public final ArrayList<KeyEvent> trigger;
@@ -15,7 +16,7 @@ public class Shortcut {
         this.actions = new ArrayList<Action>();
     }
 
-    public Shortcut addTriggerKey(Integer keyId, ClickType clickType) {
+    public Shortcut addTriggerKey(KeyId keyId, ClickType clickType) {
         this.trigger.add(new KeyEvent(keyId, clickType));
         return this;
     }

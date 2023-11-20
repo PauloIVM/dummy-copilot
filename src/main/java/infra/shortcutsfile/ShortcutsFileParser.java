@@ -5,6 +5,7 @@ import adapters.interfaces.IShortcutsFileParser;
 import adapters.keyIdAdapter.KeyIdAdapter;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
+import entities.keyId.KeyId;
 import entities.shortcut.Shortcut;
 
 import com.google.gson.Gson;
@@ -79,19 +80,19 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
             // TODO: Esse código está meio ruim. Aparentemente eu posso simplesmente eliminar
             // esse if a seguir. Criar testes automatizados e melhorar. 
             if (splittedBySpace[index].length() == 1) {
-                Integer keyCode = KeyIdAdapter.parseTextToKeyId(splittedBySpace[index]);
-                keyEvent.add(new KeyEvent(keyCode, ClickType.DOWN));
-                keyEvent.add(new KeyEvent(keyCode, ClickType.UP));
+                KeyId keyId = KeyIdAdapter.parseTextToKeyId(splittedBySpace[index]);
+                keyEvent.add(new KeyEvent(keyId, ClickType.DOWN));
+                keyEvent.add(new KeyEvent(keyId, ClickType.UP));
                 continue;
             }
             String[] splittedByPlusChar = splittedBySpace[index].split("\\+");
             for (int j = 0; j < splittedByPlusChar.length; j++) {
-                Integer keyCode = KeyIdAdapter.parseTextToKeyId(splittedByPlusChar[j]);
-                keyEvent.add(new KeyEvent(keyCode, ClickType.DOWN));
+                KeyId keyId = KeyIdAdapter.parseTextToKeyId(splittedByPlusChar[j]);
+                keyEvent.add(new KeyEvent(keyId, ClickType.DOWN));
             }
             for (int j = 0; j < splittedByPlusChar.length; j++) {
-                Integer keyCode = KeyIdAdapter.parseTextToKeyId(splittedByPlusChar[j]);
-                keyEvent.add(new KeyEvent(keyCode, ClickType.UP));
+                KeyId keyId = KeyIdAdapter.parseTextToKeyId(splittedByPlusChar[j]);
+                keyEvent.add(new KeyEvent(keyId, ClickType.UP));
             }
         }
         return keyEvent;

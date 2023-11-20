@@ -5,12 +5,12 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import entities.keyId.KeyId;
 
 public class JNativeKeyIdAdapter {
-    static private HashMap<Integer, Integer> jNativeKeyIdToshortcutKeyIdMap;
+    static private HashMap<Integer, KeyId> jNativeKeyIdToshortcutKeyIdMap;
     static private Boolean hasBuilt = false;
 
-    static public Integer parseJNativeKeyIdToShortcutKeyId(Integer shortcutKeyId) {
+    static public KeyId parseJNativeKeyIdToShortcutKeyId(Integer jNativeKeyId) {
         if (JNativeKeyIdAdapter.hasBuilt != true) JNativeKeyIdAdapter.buildHashMaps();
-        return JNativeKeyIdAdapter.jNativeKeyIdToshortcutKeyIdMap.get(shortcutKeyId);
+        return JNativeKeyIdAdapter.jNativeKeyIdToshortcutKeyIdMap.get(jNativeKeyId);
     }
 
     static private void buildHashMaps() {

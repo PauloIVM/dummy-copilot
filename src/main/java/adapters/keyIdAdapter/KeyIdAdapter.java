@@ -4,16 +4,16 @@ import java.util.HashMap;
 import entities.keyId.KeyId;
 
 public class KeyIdAdapter {
-    static private HashMap<Integer, String> shortcutKeyIdToTextMap;
-    static private HashMap<String, Integer> textToShortcutKeyIdMap;
+    static private HashMap<KeyId, String> shortcutKeyIdToTextMap;
+    static private HashMap<String, KeyId> textToShortcutKeyIdMap;
     static private Boolean hasBuilt = false;
 
-    static public String parseKeyIdToText(Integer keyId) {
+    static public String parseKeyIdToText(KeyId keyId) {
         if (KeyIdAdapter.hasBuilt != true) KeyIdAdapter.buildHashMaps();
         return KeyIdAdapter.shortcutKeyIdToTextMap.get(keyId);
     }
 
-    static public Integer parseTextToKeyId(String text) {
+    static public KeyId parseTextToKeyId(String text) {
         if (KeyIdAdapter.hasBuilt != true) KeyIdAdapter.buildHashMaps();
         return KeyIdAdapter.textToShortcutKeyIdMap.get(text);
     }
