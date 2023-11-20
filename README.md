@@ -4,22 +4,24 @@
 
 Este é um trabalho em progresso para facilitar/automatizar a digitação ou uso em geral de computadores desktop. Atualmente, ele permite o usuário criar atalhos customizáveis e globais (no nível do sistema operacional). Outras funcionalidades virão em breve, se Deus quiser.
 
-### 1.1.Motivação
+### 1.1.História/Motivação
 
 A ideia nasceu de uma motivação muito simples: Sendo um brasileiro e usando teclados ABNT2, quando tive meu primeiro notebook com teclado padrão US, a adaptação foi muito ruim. Sendo ainda um leigo, eu não sabia da existência do layout US internacional (que permitia essas acentuações do alfabeto português). Então, por volta de 2016 eu escrevi a primeira versão desse programa, simplesmente para digitar caracteres como "ç", "ê".
 
 Infelizmente, na época eu não tinha por hábito fazer o push dos meus códigos no github, então não tenho o histórico do código dessa época versionado.
 
-Daí, ainda que essa fosse uma motivação um tanto quanto inútil, pois mais tarde eu acabei descobrindo o layout US internacional que me permitia essas acentuações, outras motivações muito interessantes surgiram e me motivaram a dar sequência no projeto. Em geral essas motivações foram muito na linha de evitar a digitação de textos longos e que eu não me lembrava de cabeça, ou que eu simplesmente tinha preguiça de digitá-los. Por exemplo:
+Daí, ainda que essa fosse uma motivação um tanto quanto inútil, pois mais tarde eu acabei descobrindo o layout US internacional que me permitia essas acentuações, outras _cases_ interessantes me levaram a dar sequência no projeto. Em geral essas motivações foram muito na linha de evitar a digitação de textos longos que eu não me lembrava de cabeça, ou que eu simplesmente tinha preguiça de digitá-los. Por exemplo:
 
 - Sempre que eu precisava fazer o push de uma branch, o git me pedia para digitar um `git push --set-upstream origin BRANCH_NAME`. Isso me incomodava muito, eu não queria ter que digitar isso, e tbm achava chato copiar o comando do terminal para colá-lo logo abaixo. Na minha cabeça, se o git já sabia que era uma branch nova, eu deveria simplesmente poder digitar um simples `git push` e ele seguir o fluxo do comando que ele mesmo me sugeriu. Enfim, eu até mesmo criei um atalho no VSCode para isso, mas ainda me incomodava o fato de que se eu estivesse num terminal fora do VSCode esse atalho não funcionaria.
 - Diversos outros exemplos nessa linha. Por exemplo, ao me candidatar pra vagas, os formulários grandes pedindo informações bem comuns (e tendo o input HTML sem sugestões), me fazendo digitar diversas vezes informações como 'email', 'linkedin' e por aí vai.
 
 Diante disso, eu ficava muito encucado pensando: Eu realmente preciso de um gerenciador de atalhos que funcione no OS, seja num terminal, numa página web ou o que for. Quando eu for preencher um formulário de vagas, eu quero digitar por exemplo algo como `. e m l ctrl` e ter o email todo digitado. Ao ter que fazer um git push de uma branch nova, eu quero digitar um `. g p ctrl` e ter o comando digitado bem na minha frente. Assim, essa foi a maior motivação e que me fez seguir com o projeto.
 
-Outras motivações surgiram, como um analytics de como é o meu uso do teclado, velocidade média de digitação e coisas do tipo, mas são motivações menos importantes e que eu ainda não implementei.
+Outras motivações surgiram, como um analytics de como é o meu uso do teclado, velocidade média de digitação e coisas do tipo. Ou ainda, por exemplo, replicar via software funcionalidades de teclados como o `ZFA Planck EZ`. São teclados caros, porém com nível de personalização absurda; é possível até mesmo controlar o mouse pelas teclas do teclado; e, percebi que grande parte dessas funcionalidades poderiam ser reproduzidas pelo **DummyCopilot**, sem a necessidade de adquirir um hardware desse calibre.
 
-Por exemplo, hoje existem teclados como o `ZFA Planck EZ`, caros, porém com nível de personalização absurda; é possível até mesmo controlar o mouse pelas teclas do teclado; e, percebi que grande parte dessas funcionalidades poderiam ser reproduzidas via software por esse programa, sem a necessidade de adquirir um hardware desse calibre e gastando nenhum dinheiro.
+Em outubro de 2022 eu reescrevi esse programa usando a stack NodeJS/Typescript. A primeira versão de 2016 eu havia feito em Java. Essa versão de 2022, contudo, ficou muito ruim. Para fazer o setup da aplicação, era preciso instalar diversas bibliotecas, além de ter que se fazer alguns ajustes no próprio código de acordo com o seu hardware. E, essa versão também só dava suporte pra Linux. Ela pode ser encontrada neste [repositório](https://github.com/PauloIVM/-DEPRECATED--dummy-copilot-node), mas adianto que se for tentar rodar esse código em Typescript, terá muita dor de cabeça. Eu mesmo desisti num momento que precisei trocar de máquina e não consegui fazer o setup em um PC com ambiente mais atualizado.
+
+Em 2023 eu voltei às origens, reescrevendo o programa em Java, que se encontra aqui. Apesar deu trabalhar com Typescript no dia-a-dia, preciso confessar que pra aplicações Desktop o Java ainda é infinitamente superior. O setup da aplicação ficou infinitamente mais simples, com compatibilidade para a maioria dos sistemas operacionais. 
 
 ### 1.2.Origem do Nome
 
