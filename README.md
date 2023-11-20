@@ -1,4 +1,4 @@
-# DummyCopilot
+# DummyCopilot 🤖💻
 
 ## 1.Introdução
 
@@ -8,11 +8,11 @@ Este é um trabalho em progresso para facilitar/automatizar a digitação ou uso
 
 A ideia nasceu de uma motivação muito simples: Sendo um brasileiro e usando teclados ABNT2, quando tive meu primeiro notebook com teclado padrão US, a adaptação foi muito ruim. Sendo ainda um leigo, eu não sabia da existência do layout US internacional (que permitia essas acentuações do alfabeto português). Então, por volta de 2016 eu escrevi a primeira versão desse programa, simplesmente para digitar caracteres como "ç", "ê".
 
-Infelizmente, na época eu não tinha por hábito faser o push dos meus códigos no github, então não tenho o histórico do código dessa época versionado.
+Infelizmente, na época eu não tinha por hábito faser o push dos meus códigos no github, então não tenho o histórico dessa época versionado.
 
-Daí, ainda que essa fosse uma motivação um tanto quanto inútil, pois mais tarde eu acabei descobrindo o layout US internacional que me permitia essas acentuações, outras motivações muito interessantes surgiram e me motivaram a dar sequência no projeto. Em geral essas motivações foram muito na linha de evitar a digitação de textos longos e que eu não me lembrava de cabeça, ou q eu simplesmente tinha preguiça de digitá-los. Por exemplo:
+Daí, ainda que essa fosse uma motivação um tanto quanto inútil, pois mais tarde eu acabei descobrindo o layout US internacional que me permitia essas acentuações, outras motivações muito interessantes surgiram e me motivaram a dar sequência no projeto. Em geral essas motivações foram muito na linha de evitar a digitação de textos longos e que eu não me lembrava de cabeça, ou que eu simplesmente tinha preguiça de digitá-los. Por exemplo:
 
-- Sempre que eu precisava fazer o push de uma branch, o git me pedia para digitar um `git push --set-upstream origin BRANCH_NAME`. Isso me incomodava muito, eu não queria ter que digitar isso, e tbm achava chato copiar o comando do terminal para colá-lo logo abaixo. Na minha cabeça, se o git já sabia que era uma branch nova, eu deveria simplesmente poder digitar um simples `git push` e ele seguir o fluxo do comando q ele mesmo me sugeriu. Enfim, eu até mesmo criei um atalho no VSCode para isso, mas ainda me incomodava o fato de que se eu estivesse num terminal fora do VSCode esse atalho não funcionaria.
+- Sempre que eu precisava fazer o push de uma branch, o git me pedia para digitar um `git push --set-upstream origin BRANCH_NAME`. Isso me incomodava muito, eu não queria ter que digitar isso, e tbm achava chato copiar o comando do terminal para colá-lo logo abaixo. Na minha cabeça, se o git já sabia que era uma branch nova, eu deveria simplesmente poder digitar um simples `git push` e ele seguir o fluxo do comando que ele mesmo me sugeriu. Enfim, eu até mesmo criei um atalho no VSCode para isso, mas ainda me incomodava o fato de que se eu estivesse num terminal fora do VSCode esse atalho não funcionaria.
 - Diversos outros exemplos nessa linha. Por exemplo, ao me candidatar pra vagas, os formulários grandes pedindo informações bem comuns (e tendo o input HTML sem sugestões), me fazendo digitar diversas vezes informações como 'email', 'linkedin' e por aí vai.
 
 Diante disso, eu ficava muito encucado pensando: Eu realmente preciso de um gerenciador de atalhos que funcione no OS, seja num terminal, numa página web ou o que for. Quando eu for preencher um formulário de vagas, eu quero digitar por exemplo algo como `. e m l ctrl` e ter o email todo digitado. Ao ter que fazer um git push de uma branch nova, eu quero digitar um `. g p ctrl` e ter o comando digitado bem na minha frente. Assim, essa foi a maior motivação e que me fez seguir com o projeto.
@@ -114,7 +114,7 @@ A seguir, como ficou minha hierarquia de camadas:
 
 Estes são os `objetos de negócio` da aplicação. Todas as regras de negócios se baseiam nestas entidades.
 
-Esta é a camada mais abstrata; portanto, não deve ter nenhuma referência à camadas mais externas, portanto nenhuma referência à nenhuma camada além de si própria.
+Esta é a camada mais abstrata; não deve ter nenhuma referência à camadas mais externas, nenhuma camada além de si própria.
 
 - Action;
 - ClickType;
@@ -139,7 +139,7 @@ Aqui temos as principais regras de negócio (por enquanto poucas). Esta camada t
 - ActionsExecutor;
 - ShortcutsEvaluator;
 
-O `ActionsExecutor` é responsável por executar todas as entidades `actions` q possam existir, baseado num identificador de cada respectiva action.
+O `ActionsExecutor` é responsável por executar todas as entidades `actions` que possam existir, baseado num identificador de cada respectiva action.
 
 Idealmente, o bom seria se o `ActionsExecutor` não conhecesse nem mesmo a ideia de uma estrutura de uma camada superior, muito menos ter qualquer acoplamento com classes ou interfaces de camadas superiores. Contudo, esse é um exemplo em que fica difícil modelar essa regra de negócio sem pressupor algo na infra que execute essas ações no sistema. Assim, nós podemos fazer uso da **inversão de dependência**; O próprio `ActionsExecutor` irá especificar um `IRobot` genérico; e a camada de `infra` precisará declarar um `Robot` que implemente o `IRobot` especificado na camada `usecases`. Desta forma, a **Regra da Dependência** do clean-architecture não é violada.
 
