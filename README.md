@@ -1,10 +1,10 @@
 # DummyCopilot
 
-## Introdução
+## 1.Introdução
 
 Este é um trabalho em progresso para facilitar/automatizar a digitação ou uso em geral de computadores desktop. Atualmente, ele permite o usuário criar atalhos customizáveis e globais (no nível do sistema operacional), mas outras funcionalidades virão em breve, se Deus quiser.
 
-### Motivação
+### 1.1.Motivação
 
 A ideia nasceu de uma motivação muito simples: Sendo um brasileiro e usando teclados ABNT2, quando tive meu primeiro notebook com teclado padrão US, a adaptação foi muito ruim. Sendo ainda um leigo, eu não sabia da existência do layout US internacional (que permitia essas acentuações do alfabeto português). Então, por volta de 2016 eu escrevi a primeira versão desse programa, simplesmente para digitar caracteres como "ç", "ê".
 
@@ -21,14 +21,14 @@ Outras motivações surgiram, como um analytics de como é o meu uso do teclado,
 
 Por exemplo, hoje existem teclados como o `ZFA Planck EZ`, caros, porém com nível de personalização absurda; é possível até mesmo controlar o mouse pelas teclas do teclado; e, percebi que grande parte dessas funcionalidades poderiam ser reproduzidas via software por esse programa, sem a necessidade de adquirir um hardware desse calibre e gastando nenhum dinheiro.
 
-### Origem do Nome
+### 1.2.Origem do Nome
 
 O nome `DummyCopilot` é no sentido dele ser um copiloto 'burro'/'manequim' (tipo um manequim articulado, ele só vai fazer exatamente o que você o configurar para fazer), mas ainda assim útil pois ele irá funcionar independente do editor de texto, OS ou o que for.
 
 Para usar o software também ficou muito simples e com boa compatibilidade nos diversos OS atuais. Seguem as explicações no tópico de instalação.
 
 
-## Instalação
+## 2.Instalação
 
 Se você não deseja saber os detalhes da implementação, mas apenas pegar o arquivo `.jar` e sair em usando, em breve eu devo criar uma página web para disponiblizar esse arquivo. Até lá, você precisará gerar o `.jar` pelo código-fonte, ou rodar o código fonte em um ambiente de desenvolvimento integrado.
 
@@ -56,11 +56,11 @@ O projeto ainda não tem uma interface gráfica, então você não conseguirá e
 chmod +x FILE_NAME.jar
 ```
 
-## Como usar
+## 3.Como usar
 
 TODO: ...
 
-## Estrutura do Projeto
+## 4.Estrutura do Projeto
 
 O projeto tem uma estrutura baseada no Clean-Architecture; onde tentei isolar o domínio em entidades e usecases, como sendo as duas camadas de mais alto nível, e abstraindo os demais detalhes como acessos ao OS, arquivos e etc para camadas externas de baixo nível.
 
@@ -110,7 +110,7 @@ A seguir, como ficou minha hierarquia de camadas:
        └── shortcut
 ```
 
-### Entities (Business Rules)
+### 4.1.Entities (Business Rules)
 
 Estes são os `objetos de negócio` da aplicação. Todas as regras de negócios se baseiam nestas entidades.
 
@@ -132,7 +132,7 @@ O `KeyEvent` é uma união do `KeyId` e `ClickType`. Assim, sempre que uma tecla
 
 Por fim, a entidade `Shortcut` é uma união das demais entidades. Esta entidade representa um atalho, com um trigger, que nada mais é do que uma lista de `KeyEvent`; e, este atalho possui uma lista de `Action` para executar quando for disparado.
 
-### Usecases (Application Business Rules)
+### 4.2.Usecases (Application Business Rules)
 
 Aqui temos as principais regras de negócio (por enquanto poucas). Esta camada tem a liberdade de importar e manipular as entidades, para assim criar as regras de negócio.
 
@@ -145,7 +145,7 @@ Idealmente, o bom seria se o `ActionsExecutor` não conhecesse nem mesmo a ideia
 
 O `ShortcutsEvaluator` é responsável por, baseado em uma lista de atalhos e numa entrada de teclas clicadas, nos retornar se um atalho foi disparado ou não.
 
-### Adapters (Interface Adapters)
+### 4.3.Adapters (Interface Adapters)
 
 Esta camada faz uma ponte entre a infra e os usecases. Aqui por hora temos adapters e controllers.
 
@@ -159,7 +159,7 @@ O `KeyloggerController` é responsável por 'casar' um `IKeylistenner` (que ser�
 
 O `ShortcutsController` é responsável por 'casar' os usecases `ActionsExecutor` e `ShortcutsEvaluator` com um `IKeylistenner`. Para isso ele também precisara ter uma entrada de quais são os atalhos do user, que vêm pela interface `IShortcutsFileParser`; e também possui algumas outras dependências de camadas internas que se fizeram necessárias para gerenciar tudo isso. O objetivo desse controller é aproximar ao máximo o uso do sistema de atalhos da infra, mas sem implementar nada ainda da camada de infra.
 
-### Infra (Libs, OS, Drivers...)
+### 4.4.Infra (Libs, OS, Drivers...)
 
 Esta camada já é onde fica a implementação concreta das classes de mais baixo nível, que irão ler arquivos, interagir com o OS, criar interfaces gráficas e etc.
 
@@ -177,7 +177,7 @@ O `ShortcutsFile` é responsável por pegar um arquivo json e convertê-lo para 
 
 As `view` são as aplicações de mais baixo nível, que o usuário terá contato. Por hora, tenho apenas uma CLI (command-line interface). Para a view funcionar, em tese ela precisa pegar outras estruturas da camada `infra`, instanciá-las, e em seguida instanciar algum controller passando essas dependências de `infra` para o controller. Para não ficar muito complexo o build de um controller dentro da view, dentro da camada `infra` eu criei também o package `composers`, que nada mais é do que builders dos controllers, que injetam todas as dependências de infra; como esses composers estão na camada de `infra`, eles não violam a **Regra da Dependência** por conhecerem a implementação concreta de tais elementos.
 
-## Planejamento de próximos passos:
+## 5.Planejamento de próximos passos:
 
 - Criar mais testes automatizados;
 - Conferir a visibilidade dos pacotes, métodos public desnecessários;
