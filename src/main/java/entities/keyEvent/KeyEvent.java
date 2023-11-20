@@ -9,4 +9,11 @@ public class KeyEvent {
         this.keyId = keyId;
         this.clickType = clickType;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof KeyEvent)) return false;
+        KeyEvent keyInput = (KeyEvent) obj;
+        return keyInput.keyId == this.keyId && keyInput.clickType == this.clickType;
+    }
 }
