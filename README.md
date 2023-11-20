@@ -30,6 +30,8 @@ O nome `DummyCopilot` faz alusão a um copiloto "inerte" ou "manequim" (como um 
 
 ## 2.Instalação
 
+TODO: Adicionar vídeo tutorial...
+
 Caso não queira saber os detalhes da implementação, mas apenas pegar o arquivo `.jar` e começar a usar, em breve pretendo disponibilizar esse arquivo por meio de uma página web. Até lá, será necessário gerar o `.jar` a partir do código-fonte ou executar o código-fonte em um ambiente de desenvolvimento integrado.
 
 Para rodar o projeto em um IntelliJ, VScode ou similar, não há muitos segredos. Basta clonar o projeto; o seu editor solicitará a instalação das dependências do arquivo `pom.xml` e, em seguida, executar a classe Main em `src/main/java/Main.class`.
@@ -58,7 +60,36 @@ chmod +x FILE_NAME.jar
 
 ## 3.Como usar
 
-TODO: ...
+TODO: Adicionar vídeo tutorial...
+
+Tendo feito a configuração e executado o projeto com sucesso, você terá percebido a importância do arquivo `shortcuts.config.json`. Neste arquivo, é onde estão armazenados todos os seus atalhos personalizados.
+
+Cada atalho possui um `trigger` e uma lista de `actions`. Para formar a sequência de um `trigger` de um atalho, basta considerar que a sequência é composta pela representação textual de cada tecla separada por espaços. No caso de teclas pressionadas simultaneamente, é necessário utilizar o sinal `+` entre as duas teclas em vez do espaço.
+
+Por exemplo, suponhamos um `trigger` em que o usuário pressiona a tecla `control`; mantendo o `control` pressionado, pressiona a tecla `espaço`. Em seguida, libera tanto a tecla `espaço` quanto a tecla `control`; e por fim, pressiona e solta a tecla `m`. A representação do `trigger` no formato de texto seria:
+
+```
+"trigger": "ctrl+space m"
+```
+
+Observe que para criar um `trigger`, é necessário conhecer a representação em texto de cada tecla. Para descobrir isso, você pode iniciar o CLI, selecionar a opção `Start keylogger` e, em seguida, as teclas que você pressionar terão o código textual exibido no terminal. Um detalhe importante é que a representação das teclas se baseia no layout do teclado dos EUA (US International Keyboard Layout), então os nomes das teclas podem ser um pouco diferentes dos símbolos no seu teclado; no entanto, basta copiar e colar a string indicada pelo CLI. Em breve, planejo ter uma funcionalidade para inserir um atalho pelo CLI, facilitando caso não queira inserir diretamente pelo JSON.
+
+Depois de ter o `trigger`, agora você precisa fornecer as ações do seu atalho. Por enquanto, temos apenas dois tipos de ações: `paste` e `sequence`. Na lista de ações que você fornecerá no atalho, é possível combinar ações dos dois tipos. Normalmente, você vai querer apagar algum caractere que foi utilizado para acionar a ação e, em seguida, inserir algo ou executar uma sequência de teclas. No exemplo abaixo, eu finalizo o atalho inicialmente com uma ação que pressiona a tecla `backspace` para apagar a tecla `m` que foi digitada durante o trigger; em seguida, realizo um `paste` de um conteúdo qualquer:
+
+```
+// Filename: shortcuts.config.json
+[
+    {
+        "trigger": "ctrl+space m",
+        "actions": [
+            { "type": "sequence", "keys": "backspace" },
+            { "type": "paste", "content": "FOO" }
+        ]
+    }
+]
+```
+
+Repare que o `shortcuts.config.json` é um array, e você pode adicionar quantos atalhos quiser.
 
 ## 4.Estrutura do Projeto
 
