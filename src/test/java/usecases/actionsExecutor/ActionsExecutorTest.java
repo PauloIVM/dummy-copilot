@@ -28,8 +28,8 @@ public class ActionsExecutorTest {
     @DisplayName("Should exec sequence action")
     void testSequenceActionExecution() {
         ArrayList<KeyEvent> keysSequenceList = new ArrayList<>();
-        keysSequenceList.add(new KeyEvent(KeyId.VK_1, ClickType.DOWN));
-        keysSequenceList.add(new KeyEvent(KeyId.VK_1, ClickType.UP));
+        keysSequenceList.add(new KeyEvent(KeyId.VK_1.get(), ClickType.DOWN));
+        keysSequenceList.add(new KeyEvent(KeyId.VK_1.get(), ClickType.UP));
         int repeat = 2;
         Action action = new ActionSequence(repeat, keysSequenceList);
         Robot robot = new Robot();
