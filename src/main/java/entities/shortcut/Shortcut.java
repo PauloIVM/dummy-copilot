@@ -49,4 +49,11 @@ public class Shortcut {
         }
         return keysSequence;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Shortcut)) return false;
+        Shortcut input = (Shortcut) obj;
+        return input.actions.equals(this.actions) && input.trigger.equals(this.trigger);
+    }
 }

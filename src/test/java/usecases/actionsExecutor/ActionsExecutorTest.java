@@ -35,13 +35,12 @@ public class ActionsExecutorTest {
         Robot robot = new Robot();
         ActionsExecutor actionsExecutor = new ActionsExecutor(robot);
         actionsExecutor.exec(action);
-        KeyEvent[] expected = {
-            keysSequenceList.get(0),
-            keysSequenceList.get(1),
-            keysSequenceList.get(0),
-            keysSequenceList.get(1),
-        };
-        Assertions.assertArrayEquals(expected, this.toArray(robot.keysTyped));
+        ArrayList<KeyEvent> expected = new ArrayList<>();
+        expected.add(keysSequenceList.get(0));
+        expected.add(keysSequenceList.get(1));
+        expected.add(keysSequenceList.get(0));
+        expected.add(keysSequenceList.get(1));
+        Assertions.assertTrue(expected.equals(robot.keysTyped));
     }
 
     private Boolean compareStringSelections(StringSelection s1, StringSelection s2) {
@@ -53,15 +52,5 @@ public class ActionsExecutorTest {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    private KeyEvent[] toArray(ArrayList<KeyEvent> list) {
-        KeyEvent[] arr = new KeyEvent[list.size()];
-        int index = 0;
-        for (KeyEvent k: list) {
-            arr[index] = k;
-            index++;
-        }
-        return arr;
     }
 }

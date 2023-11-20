@@ -24,32 +24,12 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
     public ShortcutsFileParser() {}
 
     public ArrayList<Shortcut> get() {
-        ShortcutFile[] shortcutsFile = this.getShortcutsJsonFile();
+        ShortcutsFile[] shortcutsFile = this.getShortcutsJsonFile();
         ArrayList<Shortcut> shortcuts = this.createShortcuts(shortcutsFile);
         return shortcuts;
     }
 
-    private ShortcutFile[] getShortcutsJsonFile() {
-        String jsonFileName = "shortcuts.config.json";
-        try {
-            Gson gson = new Gson();
-            BufferedReader reader = new BufferedReader(new FileReader(jsonFileName));
-            JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
-            ShortcutFile[] shortcuts = new ShortcutFile[jsonArray.size()];
-            for (int i = 0; i < jsonArray.size(); i++) {
-                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                ShortcutFile shortcut = gson.fromJson(jsonObject, ShortcutFile.class);
-                shortcuts[i] = shortcut;
-            }
-            reader.close();
-            return shortcuts;
-        } catch (JsonSyntaxException | JsonIOException | IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private ArrayList<Shortcut> createShortcuts(ShortcutFile[] shortcutsFile) {
+    protected ArrayList<Shortcut> createShortcuts(ShortcutsFile[] shortcutsFile) {
         ArrayList<Shortcut> shortcuts = new ArrayList<Shortcut>();
         if (shortcutsFile == null) { return shortcuts; }
         for (int i = 0; i < shortcutsFile.length; i++) {
@@ -68,6 +48,28 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
             shortcuts.add(shortcut);
         }
         return shortcuts;
+    }
+
+    private ShortcutsFile[] getShortcutsJsonFile() {
+        String jsonFileName = "shortcuts.config.json";
+        try {
+            Gson gson = new Gson();
+            BufferedReader reader = new BufferedReader(new FileReader(jsonFileName));
+            JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
+            ShortcutsFile[] shortcuts = new ShortcutsFile[jsonArray.size()];
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                ShortcutsFile shortcut = gson.fromJson(jsonObject, ShortcutsFile.class);
+                shortcuts[i] = shortcut;
+            }
+            reader.close();
+            return shortcuts;
+        } catch (JsonSyntaxException | JsonIOException | IOException e) {
+            System.err.println("There was a problem to read shortcuts.config.json file. Check invalid atributes.");
+            System.err.println(e.getMessage());
+            System.exit(1);
+            return null;
+        }
     }
 
     // TODO: O nome está ruim... ele retorna um arraylist, e nao um keyEvent. Melhor:
