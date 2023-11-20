@@ -1,11 +1,12 @@
 package entities.keyEvent;
 import entities.clickType.ClickType;
+import entities.keyId.KeyId;
 
 public class KeyEvent {
-    public final Integer keyId;
+    public final KeyId keyId;
     public final ClickType clickType;
 
-    public KeyEvent(Integer keyId, ClickType clickType) {
+    public KeyEvent(KeyId keyId, ClickType clickType) {
         this.keyId = keyId;
         this.clickType = clickType;
     }

@@ -2,6 +2,7 @@ package infra.robot;
 
 import java.awt.event.KeyEvent;
 
+import entities.keyId.KeyId;
 import usecases.actionsExecutor.IRobot;
 
 import java.awt.Toolkit;
@@ -24,12 +25,12 @@ public class Robot implements IRobot {
         this.sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
-    public void keyPress(int keycode) {
-        this.awtRobot.keyPress(keycode);
+    public void keyPress(KeyId keyId) {
+        this.awtRobot.keyPress(keyId.get());
     }
 
-    public void keyRelease(int keycode) {
-        this.awtRobot.keyRelease(keycode);
+    public void keyRelease(KeyId keyId) {
+        this.awtRobot.keyRelease(keyId.get());
     }
 
     public void paste() {

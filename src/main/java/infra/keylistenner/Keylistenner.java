@@ -7,6 +7,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import adapters.interfaces.IKeylistenner;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
+import entities.keyId.KeyId;
 
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -60,19 +61,19 @@ public class Keylistenner implements NativeKeyListener, IKeylistenner {
 
     public void nativeKeyPressed(NativeKeyEvent e) {
         if (this.onKeyPressed == null) return;
-        Integer key = JNativeKeyIdAdapter.parseJNativeKeyIdToShortcutKeyId(e.getKeyCode());
+        KeyId key = JNativeKeyIdAdapter.parseJNativeKeyIdToShortcutKeyId(e.getKeyCode());
         this.onKeyPressed.accept(new KeyEvent(key, ClickType.DOWN));
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) {
         if (this.onKeyReleased == null) return;
-        Integer key = JNativeKeyIdAdapter.parseJNativeKeyIdToShortcutKeyId(e.getKeyCode());
+        KeyId key = JNativeKeyIdAdapter.parseJNativeKeyIdToShortcutKeyId(e.getKeyCode());
         this.onKeyReleased.accept(new KeyEvent(key, ClickType.UP));
     }
 
     public void nativeKeyTyped(NativeKeyEvent e) {
         if (this.onKeyTyped == null) return;
-        Integer key = JNativeKeyIdAdapter.parseJNativeKeyIdToShortcutKeyId(e.getKeyCode());
+        KeyId key = JNativeKeyIdAdapter.parseJNativeKeyIdToShortcutKeyId(e.getKeyCode());
         this.onKeyTyped.accept(new KeyEvent(key, null));
     }
 }

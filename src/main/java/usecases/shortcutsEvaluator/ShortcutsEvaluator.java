@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
+import entities.keyId.KeyId;
 import entities.shortcut.Shortcut;
 
 public class ShortcutsEvaluator {
@@ -24,7 +25,7 @@ public class ShortcutsEvaluator {
         return this.triggeredShortcut != null;
     }
 
-    public void addKeyClicked(Integer keyId, ClickType clickType) {
+    public void addKeyClicked(KeyId keyId, ClickType clickType) {
         this.addKeyClicked(new KeyEvent(keyId, clickType));
     }
 

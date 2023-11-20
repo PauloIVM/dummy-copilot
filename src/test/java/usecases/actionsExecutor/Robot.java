@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
+import entities.keyId.KeyId;
 
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.StringSelection;
@@ -17,12 +18,12 @@ public class Robot implements IRobot {
         this.keysTyped = new ArrayList<KeyEvent>();
     }
 
-    public void keyRelease(int keycode) {
-        this.keysTyped.add(new KeyEvent(keycode, ClickType.UP));
+    public void keyRelease(KeyId keyId) {
+        this.keysTyped.add(new KeyEvent(keyId, ClickType.UP));
     }
 
-    public void keyPress(int keycode) {
-        this.keysTyped.add(new KeyEvent(keycode, ClickType.DOWN));
+    public void keyPress(KeyId keyId) {
+        this.keysTyped.add(new KeyEvent(keyId, ClickType.DOWN));
     }
 
     public void delay(int ms) {}
