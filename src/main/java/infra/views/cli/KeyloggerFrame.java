@@ -5,7 +5,7 @@ import java.io.Console;
 import java.util.function.Consumer;
 import infra.composers.KeyloggerControllerBuilder;
 
-public class KeyloggerFrame implements IFrame {
+class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         Consumer<String> onKeyPressed = (String key) -> {
             System.out.print(String.format("\033[%dA", 1));

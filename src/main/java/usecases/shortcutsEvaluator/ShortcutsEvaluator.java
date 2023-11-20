@@ -21,10 +21,6 @@ public class ShortcutsEvaluator {
         return this.triggeredShortcut;
     }
 
-    public Boolean hasShortcutTriggered() {
-        return this.triggeredShortcut != null;
-    }
-
     public void addKeyClicked(KeyId keyId, ClickType clickType) {
         this.addKeyClicked(new KeyEvent(keyId, clickType));
     }
@@ -46,6 +42,10 @@ public class ShortcutsEvaluator {
             this.keysClicked.clear();
             this.triggeredShortcut = shortcut;
         }
+    }
+
+    protected Boolean hasShortcutTriggered() {
+        return this.triggeredShortcut != null;
     }
 
     private Boolean hasPartialTrigger(Shortcut shortcut) {

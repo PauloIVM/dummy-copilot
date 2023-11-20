@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.io.Console;
 
 // TODO: Desenvolver esse frame...
-public class InsertionFrame implements IFrame {
+class InsertionFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();
@@ -19,7 +19,7 @@ public class InsertionFrame implements IFrame {
         return Frame.INITIAL_FRAME;
     }
 
-    public Frame run(Console console) {
+    Frame run(Console console) {
         return Frame.INITIAL_FRAME;
     }
 }

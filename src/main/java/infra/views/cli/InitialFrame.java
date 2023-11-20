@@ -2,7 +2,7 @@ package infra.views.cli;
 import java.util.Scanner;
 import java.io.Console;
 
-public class InitialFrame implements IFrame {
+class InitialFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         AnsiUtil.clear();
         AnsiUtil.showCursor();

@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.io.Console;
 import infra.composers.ShortcutsControllerBuilder;
 
-public class ShortcutRunnerFrame implements IFrame {
+class ShortcutRunnerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         var shortcutsController = new ShortcutsControllerBuilder().build();
         shortcutsController.init();

@@ -211,7 +211,6 @@ As `views` são as aplicações de mais baixo nível, cujo o usuário terá cont
 ## 5. Planejamento de próximos passos:
 
 - Criar mais testes automatizados;
-- Conferir a visibilidade dos pacotes, métodos public desnecessários;
 - Criar feature para inserir um atalho pelo terminal;
 - Caso não exista um arquivo de configurações, gerar automaticamente;
 - Criar feature para permitir mover o mouse pelo teclado; ex.:
