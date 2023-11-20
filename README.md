@@ -8,7 +8,7 @@ Este é um trabalho em progresso para facilitar/automatizar a digitação ou uso
 
 A ideia nasceu de uma motivação muito simples: Sendo um brasileiro e usando teclados ABNT2, quando tive meu primeiro notebook com teclado padrão US, a adaptação foi muito ruim. Sendo ainda um leigo, eu não sabia da existência do layout US internacional (que permitia essas acentuações do alfabeto português). Então, por volta de 2016 eu escrevi a primeira versão desse programa, simplesmente para digitar caracteres como "ç", "ê".
 
-Infelizmente, na época eu não tinha por hábito faser o push dos meus códigos no github, então não tenho o histórico dessa época versionado.
+Infelizmente, na época eu não tinha por hábito fazer o push dos meus códigos no github, então não tenho o histórico do código dessa época versionado.
 
 Daí, ainda que essa fosse uma motivação um tanto quanto inútil, pois mais tarde eu acabei descobrindo o layout US internacional que me permitia essas acentuações, outras motivações muito interessantes surgiram e me motivaram a dar sequência no projeto. Em geral essas motivações foram muito na linha de evitar a digitação de textos longos e que eu não me lembrava de cabeça, ou que eu simplesmente tinha preguiça de digitá-los. Por exemplo:
 
