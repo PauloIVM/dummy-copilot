@@ -1,7 +1,7 @@
 package infra.shortcutsfile;
 
-public class ShortcutsFile {
-    ShortcutsFile(String trigger, ShortcutFileAction[] actions) {
+public class ShortcutFile {
+    ShortcutFile(String trigger, ShortcutFileAction[] actions) {
         this.trigger = trigger;
         this.actions = actions;
     }

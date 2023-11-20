@@ -24,22 +24,22 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
     public ShortcutsFileParser() {}
 
     public ArrayList<Shortcut> get() {
-        ShortcutsFile[] shortcutsFile = this.getShortcutsJsonFile();
+        ShortcutFile[] shortcutsFile = this.getShortcutsJsonFile();
         ArrayList<Shortcut> shortcuts = this.createShortcuts(shortcutsFile);
         return shortcuts;
     }
 
-    protected ArrayList<Shortcut> createShortcuts(ShortcutsFile[] shortcutsFile) {
+    protected ArrayList<Shortcut> createShortcuts(ShortcutFile[] shortcutsFile) {
         ArrayList<Shortcut> shortcuts = new ArrayList<Shortcut>();
         if (shortcutsFile == null) { return shortcuts; }
         for (int i = 0; i < shortcutsFile.length; i++) {
             Shortcut shortcut = new Shortcut();
-            shortcut.setTrigger(this.parseStringToKeyEvent(shortcutsFile[i].trigger));
+            shortcut.setTrigger(this.parseStringToKeyEventList(shortcutsFile[i].trigger));
             for (int j = 0; j < shortcutsFile[i].actions.length; j++) {
                 ShortcutFileAction action = shortcutsFile[i].actions[j];
                 if (action.type.equals("sequence") && action.keys != null) {
                     int repeat = action.repeat != null ? action.repeat : 1;
-                    shortcut.addAction(repeat, this.parseStringToKeyEvent(action.keys));
+                    shortcut.addAction(repeat, this.parseStringToKeyEventList(action.keys));
                 }
                 if (action.type.equals("paste") && action.content != null) {
                     shortcut.addAction(action.content);
@@ -50,16 +50,16 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
         return shortcuts;
     }
 
-    private ShortcutsFile[] getShortcutsJsonFile() {
+    private ShortcutFile[] getShortcutsJsonFile() {
         String jsonFileName = "shortcuts.config.json";
         try {
             Gson gson = new Gson();
             BufferedReader reader = new BufferedReader(new FileReader(jsonFileName));
             JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
-            ShortcutsFile[] shortcuts = new ShortcutsFile[jsonArray.size()];
+            ShortcutFile[] shortcuts = new ShortcutFile[jsonArray.size()];
             for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                ShortcutsFile shortcut = gson.fromJson(jsonObject, ShortcutsFile.class);
+                ShortcutFile shortcut = gson.fromJson(jsonObject, ShortcutFile.class);
                 shortcuts[i] = shortcut;
             }
             reader.close();
@@ -72,21 +72,11 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
         }
     }
 
-    // TODO: O nome está ruim... ele retorna um arraylist, e nao um keyEvent. Melhor:
-    // 'parseStringToKeyEventList' ou algo do tipo.
-    private ArrayList<KeyEvent> parseStringToKeyEvent(String keyEventRaw) {
+    private ArrayList<KeyEvent> parseStringToKeyEventList(String keyEventRaw) {
         ArrayList<KeyEvent> keyEvent = new ArrayList<KeyEvent>();
         String[] splittedBySpace = keyEventRaw.split(" ");
         for (int index = 0; index < splittedBySpace.length; index++) {
             if (splittedBySpace[index].isEmpty()) { continue; }
-            // TODO: Esse código está meio ruim. Aparentemente eu posso simplesmente eliminar
-            // esse if a seguir. Criar testes automatizados e melhorar. 
-            if (splittedBySpace[index].length() == 1) {
-                KeyId keyId = KeyIdAdapter.parseTextToKeyId(splittedBySpace[index]);
-                keyEvent.add(new KeyEvent(keyId, ClickType.DOWN));
-                keyEvent.add(new KeyEvent(keyId, ClickType.UP));
-                continue;
-            }
             String[] splittedByPlusChar = splittedBySpace[index].split("\\+");
             for (int j = 0; j < splittedByPlusChar.length; j++) {
                 KeyId keyId = KeyIdAdapter.parseTextToKeyId(splittedByPlusChar[j]);

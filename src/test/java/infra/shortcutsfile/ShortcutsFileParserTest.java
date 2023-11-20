@@ -15,7 +15,7 @@ import entities.shortcut.Shortcut;
 
 public class ShortcutsFileParserTest {
     ShortcutsFileParser shortcutsFileParser;
-    ShortcutsFile[] shortcutsFile;
+    ShortcutFile[] shortcutsFile;
 
     @BeforeEach
     void setup() {
@@ -23,9 +23,9 @@ public class ShortcutsFileParserTest {
             new ShortcutFileAction("sequence", 2, "a b"),
             new ShortcutFileAction("paste", "foo")
         };
-        ShortcutsFile[] shortcutsFile = {
-            new ShortcutsFile("ctrl+space m", actions),
-            new ShortcutsFile("ctrl+space p", actions),
+        ShortcutFile[] shortcutsFile = {
+            new ShortcutFile("ctrl+space m", actions),
+            new ShortcutFile("ctrl space p", actions),
         };
         this.shortcutsFile = shortcutsFile;
         this.shortcutsFileParser = new ShortcutsFileParser();
@@ -55,8 +55,8 @@ public class ShortcutsFileParserTest {
         expected.add(
             new Shortcut()
                 .addTriggerKey(KeyId.VK_CONTROL, ClickType.DOWN)
-                .addTriggerKey(KeyId.VK_SPACE, ClickType.DOWN)
                 .addTriggerKey(KeyId.VK_CONTROL, ClickType.UP)
+                .addTriggerKey(KeyId.VK_SPACE, ClickType.DOWN)
                 .addTriggerKey(KeyId.VK_SPACE, ClickType.UP)
                 .addTriggerKey(KeyId.VK_P, ClickType.DOWN)
                 .addTriggerKey(KeyId.VK_P, ClickType.UP)
