@@ -3,12 +3,17 @@ import java.util.ArrayList;
 
 import adapters.interfaces.IShortcutsFileParser;
 import adapters.keyIdAdapter.KeyIdAdapter;
+import entities.action.Action;
+import entities.action.ActionPaste;
+import entities.action.ActionSequence;
+import entities.action.ActionType;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;
 import entities.shortcut.Shortcut;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.JsonArray;
@@ -50,6 +55,31 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
         return shortcuts;
     }
 
+    protected ShortcutFile[] createShortcutsFile(ArrayList<Shortcut> shortcuts) {
+        ShortcutFile[] file = new ShortcutFile[shortcuts.size()];
+        for (int i = 0; i < file.length; i++) {
+            Shortcut shortcut = shortcuts.get(i);
+            ShortcutFileAction[] actionsFile = new ShortcutFileAction[shortcut.actions.size()];
+            for (int j = 0; j < actionsFile.length; j++) {
+                Action action = shortcut.actions.get(j);
+                if (action.actionType == ActionType.PASTE) {
+                    ActionPaste actionPaste = (ActionPaste) action;
+                    actionsFile[j] = new ShortcutFileAction("paste", actionPaste.content);
+                }
+                if (action.actionType == ActionType.SEQUENCE) {
+                    ActionSequence actionSequence = (ActionSequence) action;
+                    String keysSequenceStr = this.parseKeyEventListToString(actionSequence.keysSequence);
+                    actionsFile[j] = new ShortcutFileAction("sequence", actionSequence.repeat, keysSequenceStr);
+                }
+            }
+            file[i] = new ShortcutFile(
+                this.parseKeyEventListToString(shortcut.trigger),
+                actionsFile
+            );
+        }
+        return file;
+    }
+
     private ShortcutFile[] getShortcutsJsonFile() {
         String jsonFileName = "shortcuts.config.json";
         try {
@@ -88,5 +118,20 @@ public class ShortcutsFileParser implements IShortcutsFileParser {
             }
         }
         return keyEvent;
+    }
+
+    private String parseKeyEventListToString(ArrayList<KeyEvent> keyEventList) {
+        String result = "";
+        for (int index = 0; index < keyEventList.size(); index++) {
+            KeyEvent keyEvent = keyEventList.get(index);
+            if (index == keyEventList.size() - 1 || keyEvent.clickType == ClickType.UP) continue;
+            KeyEvent nextKeyEvent = keyEventList.get(index + 1);
+            if (keyEvent.keyId == nextKeyEvent.keyId || nextKeyEvent.clickType == ClickType.UP) {
+                result = result.concat(KeyIdAdapter.parseKeyIdToText(keyEvent.keyId)).concat(" ");
+            } else {
+                result = result.concat(KeyIdAdapter.parseKeyIdToText(keyEvent.keyId)).concat("+");
+            }
+        }
+        return result.substring(0, result.length() - 1);
     }
 }
