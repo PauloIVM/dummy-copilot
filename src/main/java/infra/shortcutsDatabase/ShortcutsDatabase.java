@@ -1,10 +1,7 @@
 package infra.shortcutsDatabase;
-import java.util.ArrayList;
 
+import adapters.interfaces.IShortcutData;
 import adapters.interfaces.IShortcutsDatabase;
-import adapters.shortcutDataAdapter.ShortcutData;
-import adapters.shortcutDataAdapter.ShortcutsDataAdapter;
-import entities.shortcut.Shortcut;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,12 +19,14 @@ public class ShortcutsDatabase implements IShortcutsDatabase {
 
     public ShortcutsDatabase() {}
  
-    public ShortcutData[] get() {
+    public IShortcutData[] get() {
         ShortcutData[] shortcutsData = this.getShortcutsJsonFile();
         return shortcutsData;
     }
 
-    public Boolean update(ShortcutData[] shortcutsData) {
+    public Boolean update(IShortcutData[] s) {
+        ShortcutData[] shortcutsData = new ShortcutData[s.length];
+        shortcutsData = (ShortcutData[]) s;
         String jsonFileName = "shortcuts.config.json";
         try {
             GsonBuilder builder = new GsonBuilder();
@@ -42,6 +41,10 @@ public class ShortcutsDatabase implements IShortcutsDatabase {
         }
     }
 
+    // TODO: Dependendo de como eu defino a implementação das interfaces e dos casts,
+    // o gson pode dar uma error aqui, pois ele não aceita serializar uma interface.
+    // Criar testes unitários que garantam que nenhuma interface foi passada de forma
+    // errada.
     private ShortcutData[] getShortcutsJsonFile() {
         String jsonFileName = "shortcuts.config.json";
         try {

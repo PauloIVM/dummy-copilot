@@ -1,12 +1,22 @@
-package adapters.shortcutDataAdapter;
+package infra.shortcutsDatabase;
 
-public class ShortcutData {
+import adapters.interfaces.IShortcutData;
+import adapters.interfaces.IShortcutDataAction;
+
+public class ShortcutData implements IShortcutData {
     public String trigger;
     public ShortcutDataAction[] actions;
 
     public ShortcutData(String trigger, ShortcutDataAction[] actions) {
         this.trigger = trigger;
         this.actions = actions;
+    }
+
+    public String getTrigger() { return this.trigger; }
+    public void setTrigger(String trigger) { this.trigger = trigger; }
+    public IShortcutDataAction[] getActions() { return this.actions; }
+    public void setActions(IShortcutDataAction[] actions) {
+        this.actions = (ShortcutDataAction[]) actions;
     }
 
     @Override

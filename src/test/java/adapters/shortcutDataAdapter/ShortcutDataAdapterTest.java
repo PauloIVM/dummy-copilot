@@ -6,17 +6,29 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import adapters.interfaces.IShortcutData;
+import adapters.interfaces.IShortcutsDataActionFactory;
+import adapters.interfaces.IShortcutsDataFactory;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;
 import entities.shortcut.Shortcut;
 
+import infra.shortcutsDatabase.ShortcutData;
+import infra.shortcutsDatabase.ShortcutDataAction;
+import infra.shortcutsDatabase.ShortcutsDataFactory;
+import infra.shortcutsDatabase.ShortcutsDataActionFactory;
+
 public class ShortcutDataAdapterTest {
     ShortcutData[] shortcutsData;
     ArrayList<Shortcut> shortcuts;
+    IShortcutsDataFactory shortcutsDataFactory;
+    IShortcutsDataActionFactory shortcutsDataActionFactory;
 
     @BeforeEach
     void setup() {
+        this.shortcutsDataFactory = new ShortcutsDataFactory();
+        this.shortcutsDataActionFactory = new ShortcutsDataActionFactory();
         ShortcutDataAction[] actions = {
             new ShortcutDataAction("sequence", 2, "a b"),
             new ShortcutDataAction("paste", "foo")
@@ -67,13 +79,17 @@ public class ShortcutDataAdapterTest {
     @Test
     @DisplayName("Should create shortcuts-data")
     void testBasicShortcutsDataCreation() {
-        ShortcutData[] result = ShortcutsDataAdapter.toShortcutsData(this.shortcuts);
-        Assertions.assertEquals(this.shortcutsData[0].trigger, result[0].trigger);
-        Assertions.assertEquals(this.shortcutsData[0].actions[0].repeat, result[0].actions[0].repeat);
-        Assertions.assertEquals(this.shortcutsData[0].actions[0].content, result[0].actions[0].content);
-        Assertions.assertEquals(this.shortcutsData[0].actions[0].keys, result[0].actions[0].keys);
-        Assertions.assertEquals(this.shortcutsData[0].actions[0].type, result[0].actions[0].type);
-        Assertions.assertArrayEquals(this.shortcutsData[0].actions, result[0].actions);
+        IShortcutData[] result = ShortcutsDataAdapter.toShortcutsData(
+            this.shortcuts,
+            this.shortcutsDataFactory,
+            this.shortcutsDataActionFactory
+        );
+        Assertions.assertEquals(this.shortcutsData[0].trigger, result[0].getTrigger());
+        Assertions.assertEquals(this.shortcutsData[0].actions[0].getRepeat(), result[0].getActions()[0].getRepeat());
+        Assertions.assertEquals(this.shortcutsData[0].actions[0].getContent(), result[0].getActions()[0].getContent());
+        Assertions.assertEquals(this.shortcutsData[0].actions[0].getKeys(), result[0].getActions()[0].getKeys());
+        Assertions.assertEquals(this.shortcutsData[0].actions[0].getType(), result[0].getActions()[0].getType());
+        Assertions.assertArrayEquals(this.shortcutsData[0].actions, result[0].getActions());
         Assertions.assertArrayEquals(this.shortcutsData, result);
     }
 }

@@ -2,6 +2,10 @@ package adapters.shortcutDataAdapter;
 
 import java.util.ArrayList;
 
+import adapters.interfaces.IShortcutData;
+import adapters.interfaces.IShortcutDataAction;
+import adapters.interfaces.IShortcutsDataActionFactory;
+import adapters.interfaces.IShortcutsDataFactory;
 import adapters.keyEventListAdapter.KeyEventListAdapter;
 import entities.action.Action;
 import entities.action.ActionPaste;
@@ -9,22 +13,21 @@ import entities.action.ActionSequence;
 import entities.action.ActionType;
 import entities.shortcut.Shortcut;
 
-// TODO: Esse adapter deveria evoluir pra um model? Ou coesistir com um?
 public class ShortcutsDataAdapter {
-    static public ArrayList<Shortcut> toShortcuts(ShortcutData[] shortcutsData) {
+    static public ArrayList<Shortcut> toShortcuts(IShortcutData[] shortcutsData) {
         ArrayList<Shortcut> shortcuts = new ArrayList<Shortcut>();
         if (shortcutsData == null) { return shortcuts; }
         for (int i = 0; i < shortcutsData.length; i++) {
             Shortcut shortcut = new Shortcut();
-            shortcut.setTrigger(KeyEventListAdapter.toKeyEventList(shortcutsData[i].trigger));
-            for (int j = 0; j < shortcutsData[i].actions.length; j++) {
-                ShortcutDataAction action = shortcutsData[i].actions[j];
-                if (action.type.equals("sequence") && action.keys != null) {
-                    int repeat = action.repeat != null ? action.repeat : 1;
-                    shortcut.addAction(repeat, KeyEventListAdapter.toKeyEventList(action.keys));
+            shortcut.setTrigger(KeyEventListAdapter.toKeyEventList(shortcutsData[i].getTrigger()));
+            for (int j = 0; j < shortcutsData[i].getActions().length; j++) {
+                IShortcutDataAction action = shortcutsData[i].getActions()[j];
+                if (action.getType().equals("sequence") && action.getKeys() != null) {
+                    int repeat = action.getRepeat() != null ? action.getRepeat() : 1;
+                    shortcut.addAction(repeat, KeyEventListAdapter.toKeyEventList(action.getKeys()));
                 }
-                if (action.type.equals("paste") && action.content != null) {
-                    shortcut.addAction(action.content);
+                if (action.getType().equals("paste") && action.getContent() != null) {
+                    shortcut.addAction(action.getContent());
                 }
             }
             shortcuts.add(shortcut);
@@ -32,24 +35,34 @@ public class ShortcutsDataAdapter {
         return shortcuts;
     }
 
-    static public ShortcutData[] toShortcutsData(ArrayList<Shortcut> shortcuts) {
-        ShortcutData[] shortcutsData = new ShortcutData[shortcuts.size()];
+    // TODO: Não sei se eu gostei dessa abordagem dessas factories soltas assim. Por outro
+    // lado, se eu for concentrar elas no "ShortcutsDatabase" de infra, eu acho q eu teria
+    // q mover esse adapter para dentro do "ShortcutModel", o que eu tbm não sei se é o
+    // q eu quero. Pensar melhor e tomar uma decisão.
+    static public IShortcutData[] toShortcutsData(
+        ArrayList<Shortcut> shortcuts,
+        IShortcutsDataFactory shortcutsDataFactory,
+        IShortcutsDataActionFactory shortcutsDataActionFactory
+    ) {
+        IShortcutData[] shortcutsData = shortcutsDataFactory.createArray(shortcuts.size());
         for (int i = 0; i < shortcutsData.length; i++) {
             Shortcut shortcut = shortcuts.get(i);
-            ShortcutDataAction[] actionsData = new ShortcutDataAction[shortcut.actions.size()];
+            IShortcutDataAction[] actionsData = shortcutsDataActionFactory.createArray(
+                shortcut.actions.size()
+            );
             for (int j = 0; j < actionsData.length; j++) {
                 Action action = shortcut.actions.get(j);
                 if (action.actionType == ActionType.PASTE) {
                     ActionPaste actionPaste = (ActionPaste) action;
-                    actionsData[j] = new ShortcutDataAction("paste", actionPaste.content);
+                    actionsData[j] = shortcutsDataActionFactory.createElement("paste", actionPaste.content);
                 }
                 if (action.actionType == ActionType.SEQUENCE) {
                     ActionSequence actionSequence = (ActionSequence) action;
                     String keysSequenceStr = KeyEventListAdapter.toString(actionSequence.keysSequence);
-                    actionsData[j] = new ShortcutDataAction("sequence", actionSequence.repeat, keysSequenceStr);
+                    actionsData[j] = shortcutsDataActionFactory.createElement("sequence", actionSequence.repeat, keysSequenceStr);
                 }
             }
-            shortcutsData[i] = new ShortcutData(
+            shortcutsData[i] = shortcutsDataFactory.createElement(
                 KeyEventListAdapter.toString(shortcut.trigger),
                 actionsData
             );

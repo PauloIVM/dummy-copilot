@@ -1,6 +1,8 @@
-package adapters.shortcutDataAdapter;
+package infra.shortcutsDatabase;
 
-public class ShortcutDataAction {
+import adapters.interfaces.IShortcutDataAction;
+
+public class ShortcutDataAction implements IShortcutDataAction  {
     public String type;
     public String keys;
     public String content;   
@@ -16,6 +18,15 @@ public class ShortcutDataAction {
         this.keys = keys;
         this.repeat = repeat;
     }
+
+    public String getType() { return this.type; }
+    public String getKeys() { return this.keys; }
+    public String getContent() { return this.content; }
+    public Integer getRepeat() { return this.repeat; }
+    public void setType(String type) { this.type = type; }
+    public void setKeys(String keys) { this.keys = keys; }
+    public void setContent(String content) { this.content = content; }
+    public void setRepeat(Integer repeat) { this.repeat = repeat; }
     
     @Override
     public boolean equals(Object obj) {
