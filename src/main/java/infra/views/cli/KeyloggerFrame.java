@@ -4,18 +4,11 @@ import java.util.Scanner;
 import java.io.Console;
 import java.util.function.Consumer;
 
-import infra.composers.KeyloggerControllerBuilder;
+import infra.composers.KeyloggerControllerFactory;
 
 class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         Consumer<String> onKeyPressed = (String key) -> {
-            // TODO: Ao invés de simplesmente logar uma mensagem, talvez tentar usar
-            // uma lambda com uma exceção e forçar a sair desse frame se a tecla enter
-            // for digitada. Não sei exatamente como fazer isso, pois a lambda vai pra
-            // dentro do jnativehook, ele é quem pegaria a exceção.
-            // @FunctionalInterface
-            // interface IKeyPressedConsumer { void apply(String s) throws Exception; }
-            // if (key == "enter") throw new Exception("Exception message");
             if (key == "enter") {
                 System.out.print(String.format("\033[%dA", 1));
                 System.out.print("\033[2K");
@@ -28,7 +21,7 @@ class KeyloggerFrame implements IFrame {
             System.out.print("-> ");
             System.out.println(key);
         };
-        var keylogger = new KeyloggerControllerBuilder(onKeyPressed).build();
+        var keylogger = KeyloggerControllerFactory.create(onKeyPressed);
         keylogger.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();

@@ -1,17 +1,19 @@
 package infra.views.cli;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
 import adapters.keyEventListAdapter.KeyEventListAdapter;
+import adapters.shortcutModel.ShortcutModel;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;
 import entities.shortcut.Shortcut;
 
 import java.io.Console;
 
+import infra.composers.ShortcutModelFactory;
 import infra.keylistenner.Keylistenner;
-import infra.shortcutsDatabase.ShortcutsDatabase;
 
 enum SubFrame {
     INITIAL_FRAME,
@@ -27,11 +29,11 @@ enum SubFrame {
 
 class InsertionFrame implements IFrame {
     private Shortcut shortcut;
-    private ShortcutsDatabase shortcutsDatabase;
+    private ShortcutModel shortcutModel;
 
     public InsertionFrame() {
         this.shortcut = new Shortcut();
-        this.shortcutsDatabase = new ShortcutsDatabase();
+        this.shortcutModel = ShortcutModelFactory.create();
     }
 
     public Frame run(Scanner scan, Console console) {
@@ -253,7 +255,7 @@ class InsertionFrame implements IFrame {
     }
 
     private SubFrame runShortcutSubFrame(Scanner scan) {
-        ArrayList<Shortcut> shortcuts = this.shortcutsDatabase.get();
+        ArrayList<Shortcut> shortcuts = this.shortcutModel.get();
         Shortcut shortcutWithSameTrigger = shortcuts
             .stream()
             .filter((Shortcut s) -> s.trigger.equals(this.shortcut.trigger))
@@ -279,14 +281,14 @@ class InsertionFrame implements IFrame {
             if (in.equals("1")) {
                 Integer index = shortcuts.indexOf(shortcutWithSameTrigger);
                 shortcuts.set(index, this.shortcut);
-                this.shortcutsDatabase.update(shortcuts);
+                this.shortcutModel.update(shortcuts);
                 return SubFrame.NEW_SHORTCUT_QUESTION;
             }
             if (in.equals("2")) return SubFrame.INITIAL_FRAME;
             return SubFrame.SHORTCUT;
         }
         shortcuts.add(this.shortcut);
-        this.shortcutsDatabase.update(shortcuts);
+        this.shortcutModel.update(shortcuts);
         return SubFrame.NEW_SHORTCUT_QUESTION;
     }
 }

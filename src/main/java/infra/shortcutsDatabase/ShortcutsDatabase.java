@@ -21,19 +21,15 @@ import java.io.IOException;
 public class ShortcutsDatabase implements IShortcutsDatabase {
 
     public ShortcutsDatabase() {}
-
-    // TODO: Seria legal fazer com que esse cara não conhecesse a entidade Shortcut;
-    // Daí eu poderia criar um model no adapters q faz isso, e integra o DB. 
-    public ArrayList<Shortcut> get() {
+ 
+    public ShortcutData[] get() {
         ShortcutData[] shortcutsData = this.getShortcutsJsonFile();
-        ArrayList<Shortcut> shortcuts = ShortcutsDataAdapter.toShortcuts(shortcutsData);
-        return shortcuts;
+        return shortcutsData;
     }
 
-    public Boolean update(ArrayList<Shortcut> shortcuts) {
+    public Boolean update(ShortcutData[] shortcutsData) {
         String jsonFileName = "shortcuts.config.json";
         try {
-            ShortcutData[] shortcutsData = ShortcutsDataAdapter.toShortcutsData(shortcuts);
             GsonBuilder builder = new GsonBuilder();
             Gson gsonWriter = builder.setPrettyPrinting().create();
             String jsonString = gsonWriter.toJson(shortcutsData);
