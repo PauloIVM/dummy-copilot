@@ -27,6 +27,11 @@ public class Shortcut {
         return this;
     }
 
+    public Shortcut clearTrigger() {
+        this.trigger.clear();
+        return this;
+    }
+
     public Shortcut addAction(String content) {
         this.actions.add(new ActionPaste(content));
         return this;

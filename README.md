@@ -210,7 +210,8 @@ As `views` são as aplicações de mais baixo nível, cujo o usuário terá cont
 
 ## 5. Planejamento de próximos passos:
 
-- Criar feature para inserir um atalho pelo terminal;
+- Atualizar readme com últimos refactor;
+- Permitir buildar com um mapper para US e outro para ABNT2, ou um mapper personalizado;
 - Caso não exista um arquivo de configurações, gerar automaticamente;
 - Criar feature para permitir mover o mouse pelo teclado; ex.:
     { "trigger": "ctrl+space m", "actions": [{ "type": "setMode", "mode": "mouse" }] }
@@ -218,5 +219,6 @@ As `views` são as aplicações de mais baixo nível, cujo o usuário terá cont
         "trigger": "left", "when": { "mode": "mouse" },
         "actions": [{"type": "mouseMove", "direction": "left", "px": 10 }]
     }
+- Deixar o CLI mais bonitinho: https://medium.com/@shubham0473/unleash-your-inner-artist-a-step-by-step-guide-to-converting-images-to-ascii-art-using-java-97860464f19a
 - Criar interface gráfica;
 - Criar um analytics que me mostra dados como: média de velocidade de digitção ao longo dos dias; palavras mais digitadas; atalhos existentes que poderiam estar sendo usados e não foram; etc... 

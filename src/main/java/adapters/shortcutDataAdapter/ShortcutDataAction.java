@@ -1,17 +1,17 @@
-package infra.shortcutsfile;
+package adapters.shortcutDataAdapter;
 
-public class ShortcutFileAction {
+public class ShortcutDataAction {
     public String type;
-    public String keys;   
+    public String keys;
     public String content;   
-    public Integer repeat;  
+    public Integer repeat;
 
-    ShortcutFileAction(String type, String content) {
+    public ShortcutDataAction(String type, String content) {
         this.type = type;
         this.content = content;
     }
 
-    ShortcutFileAction(String type, Integer repeat, String keys) {
+    public ShortcutDataAction(String type, Integer repeat, String keys) {
         this.type = type;
         this.keys = keys;
         this.repeat = repeat;
@@ -19,8 +19,8 @@ public class ShortcutFileAction {
     
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ShortcutFileAction)) return false;
-        ShortcutFileAction o = (ShortcutFileAction) obj;
+        if (!(obj instanceof ShortcutDataAction)) return false;
+        ShortcutDataAction o = (ShortcutDataAction) obj;
         if (o.type != null && o.content != null) {
             return o.type.equals(this.type) && o.content.equals(this.content);
         }

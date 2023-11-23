@@ -1,18 +1,18 @@
-package infra.shortcutsfile;
+package adapters.shortcutDataAdapter;
 
-public class ShortcutFile {
+public class ShortcutData {
     public String trigger;
-    public ShortcutFileAction[] actions;
+    public ShortcutDataAction[] actions;
 
-    ShortcutFile(String trigger, ShortcutFileAction[] actions) {
+    public ShortcutData(String trigger, ShortcutDataAction[] actions) {
         this.trigger = trigger;
         this.actions = actions;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ShortcutFile)) return false;
-        ShortcutFile o = (ShortcutFile) obj;
+        if (!(obj instanceof ShortcutData)) return false;
+        ShortcutData o = (ShortcutData) obj;
         for (int i = 0; i < o.actions.length; i++) {
             if (!o.actions[i].equals(this.actions[i])) {
                 return false;
@@ -21,3 +21,4 @@ public class ShortcutFile {
         return o.trigger.equals(this.trigger);
     }
 }
+
