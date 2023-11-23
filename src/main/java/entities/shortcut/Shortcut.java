@@ -27,6 +27,11 @@ public class Shortcut {
         return this;
     }
 
+    public Shortcut clearTrigger() {
+        this.trigger.clear();
+        return this;
+    }
+
     public Shortcut addAction(String content) {
         this.actions.add(new ActionPaste(content));
         return this;
@@ -48,5 +53,12 @@ public class Shortcut {
             keysSequence.add(keyEvent);
         }
         return keysSequence;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Shortcut)) return false;
+        Shortcut input = (Shortcut) obj;
+        return input.actions.equals(this.actions) && input.trigger.equals(this.trigger);
     }
 }

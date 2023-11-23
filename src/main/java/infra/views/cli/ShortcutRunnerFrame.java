@@ -2,11 +2,11 @@ package infra.views.cli;
 
 import java.util.Scanner;
 import java.io.Console;
-import infra.composers.ShortcutsControllerBuilder;
+import infra.composers.ShortcutsControllerFactory;
 
-public class ShortcutRunnerFrame implements IFrame {
+class ShortcutRunnerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        var shortcutsController = new ShortcutsControllerBuilder().build();
+        var shortcutsController = ShortcutsControllerFactory.create();
         shortcutsController.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();

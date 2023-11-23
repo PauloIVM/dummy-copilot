@@ -11,4 +11,11 @@ public class ActionSequence extends Action {
         this.repeat = repeat;
         this.keysSequence = keysSequence;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ActionSequence)) return false;
+        ActionSequence input = (ActionSequence) obj;
+        return input.repeat == this.repeat && input.keysSequence.equals(this.keysSequence);
+    }
 }
