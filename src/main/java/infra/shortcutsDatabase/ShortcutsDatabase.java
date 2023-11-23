@@ -1,6 +1,7 @@
 package infra.shortcutsDatabase;
 
 import adapters.interfaces.IShortcutData;
+import adapters.interfaces.IShortcutDataAction;
 import adapters.interfaces.IShortcutsDatabase;
 
 import com.google.gson.Gson;
@@ -39,6 +40,26 @@ public class ShortcutsDatabase implements IShortcutsDatabase {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public IShortcutData createShortcutData(String trigger, IShortcutDataAction[] actions) {
+        return new ShortcutData(trigger, (ShortcutDataAction[]) actions);
+    }
+
+    public IShortcutData[] createShortcutDataArray(Integer size) {
+        return new ShortcutData[size];
+    }
+
+    public IShortcutDataAction createShortcutDataAction(String type, String content) {
+        return new ShortcutDataAction(type, content);
+    }
+
+    public IShortcutDataAction createShortcutDataAction(String type, Integer repeat, String keys) {
+        return new ShortcutDataAction(type, repeat, keys);
+    }
+
+    public IShortcutDataAction[] createShortcutDataActionArray(Integer size) {
+        return new ShortcutDataAction[size];
     }
 
     // TODO: Dependendo de como eu defino a implementação das interfaces e dos casts,

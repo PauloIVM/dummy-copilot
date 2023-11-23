@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import adapters.interfaces.IShortcutData;
 import adapters.interfaces.IShortcutDataAction;
-import adapters.interfaces.IShortcutsDataActionFactory;
-import adapters.interfaces.IShortcutsDataFactory;
+import adapters.interfaces.IShortcutsDatabase;
 import adapters.keyEventListAdapter.KeyEventListAdapter;
 import entities.action.Action;
 import entities.action.ActionPaste;
@@ -35,34 +34,34 @@ public class ShortcutsDataAdapter {
         return shortcuts;
     }
 
-    // TODO: Não sei se eu gostei dessa abordagem dessas factories soltas assim. Por outro
-    // lado, se eu for concentrar elas no "ShortcutsDatabase" de infra, eu acho q eu teria
-    // q mover esse adapter para dentro do "ShortcutModel", o que eu tbm não sei se é o
-    // q eu quero. Pensar melhor e tomar uma decisão.
+    // INFO: Eu não gostei dessa solução de propagar o ShortcutsDatabase pra cá. Parece
+    // que vai na contramão de 'quebrar-em-pequenas-partes'. Mas do jeito q estava antes,
+    // com várias factories correspondentes ao database em infra, eu acho que perdeu a
+    // coesão e ficou extremamente confuso. Talvez valha tentar pensar em outras soluções
+    // depois. Poderia quebrar esses caras em outros models por exemplo?
     static public IShortcutData[] toShortcutsData(
         ArrayList<Shortcut> shortcuts,
-        IShortcutsDataFactory shortcutsDataFactory,
-        IShortcutsDataActionFactory shortcutsDataActionFactory
+        IShortcutsDatabase db
     ) {
-        IShortcutData[] shortcutsData = shortcutsDataFactory.createArray(shortcuts.size());
+        IShortcutData[] shortcutsData = db.createShortcutDataArray(shortcuts.size());
         for (int i = 0; i < shortcutsData.length; i++) {
             Shortcut shortcut = shortcuts.get(i);
-            IShortcutDataAction[] actionsData = shortcutsDataActionFactory.createArray(
+            IShortcutDataAction[] actionsData = db.createShortcutDataActionArray(
                 shortcut.actions.size()
             );
             for (int j = 0; j < actionsData.length; j++) {
                 Action action = shortcut.actions.get(j);
                 if (action.actionType == ActionType.PASTE) {
                     ActionPaste actionPaste = (ActionPaste) action;
-                    actionsData[j] = shortcutsDataActionFactory.createElement("paste", actionPaste.content);
+                    actionsData[j] = db.createShortcutDataAction("paste", actionPaste.content);
                 }
                 if (action.actionType == ActionType.SEQUENCE) {
                     ActionSequence actionSequence = (ActionSequence) action;
                     String keysSequenceStr = KeyEventListAdapter.toString(actionSequence.keysSequence);
-                    actionsData[j] = shortcutsDataActionFactory.createElement("sequence", actionSequence.repeat, keysSequenceStr);
+                    actionsData[j] = db.createShortcutDataAction("sequence", actionSequence.repeat, keysSequenceStr);
                 }
             }
-            shortcutsData[i] = shortcutsDataFactory.createElement(
+            shortcutsData[i] = db.createShortcutData(
                 KeyEventListAdapter.toString(shortcut.trigger),
                 actionsData
             );

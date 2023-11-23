@@ -7,8 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import adapters.interfaces.IShortcutData;
-import adapters.interfaces.IShortcutsDataActionFactory;
-import adapters.interfaces.IShortcutsDataFactory;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;
@@ -16,19 +14,14 @@ import entities.shortcut.Shortcut;
 
 import infra.shortcutsDatabase.ShortcutData;
 import infra.shortcutsDatabase.ShortcutDataAction;
-import infra.shortcutsDatabase.ShortcutsDataFactory;
-import infra.shortcutsDatabase.ShortcutsDataActionFactory;
+import infra.shortcutsDatabase.ShortcutsDatabase;
 
 public class ShortcutDataAdapterTest {
     ShortcutData[] shortcutsData;
     ArrayList<Shortcut> shortcuts;
-    IShortcutsDataFactory shortcutsDataFactory;
-    IShortcutsDataActionFactory shortcutsDataActionFactory;
 
     @BeforeEach
     void setup() {
-        this.shortcutsDataFactory = new ShortcutsDataFactory();
-        this.shortcutsDataActionFactory = new ShortcutsDataActionFactory();
         ShortcutDataAction[] actions = {
             new ShortcutDataAction("sequence", 2, "a b"),
             new ShortcutDataAction("paste", "foo")
@@ -81,8 +74,7 @@ public class ShortcutDataAdapterTest {
     void testBasicShortcutsDataCreation() {
         IShortcutData[] result = ShortcutsDataAdapter.toShortcutsData(
             this.shortcuts,
-            this.shortcutsDataFactory,
-            this.shortcutsDataActionFactory
+            new ShortcutsDatabase()
         );
         Assertions.assertEquals(this.shortcutsData[0].trigger, result[0].getTrigger());
         Assertions.assertEquals(this.shortcutsData[0].actions[0].getRepeat(), result[0].getActions()[0].getRepeat());
