@@ -255,14 +255,7 @@ class InsertionFrame implements IFrame {
     }
 
     private SubFrame runShortcutSubFrame(Scanner scan) {
-        ArrayList<Shortcut> shortcuts = this.shortcutModel.get();
-        Shortcut shortcutWithSameTrigger = shortcuts
-            .stream()
-            .filter((Shortcut s) -> s.trigger.equals(this.shortcut.trigger))
-            .findFirst()
-            .orElse(null);
-
-        if (shortcutWithSameTrigger != null) {
+        if (this.shortcutModel.hasTrigger(this.shortcut)) {
             AnsiUtil.clear();
             AnsiUtil.showCursor();
             AnsiUtil.setGoldColor();
@@ -279,16 +272,13 @@ class InsertionFrame implements IFrame {
             AnsiUtil.setPurpleColor();
             String in = scan.next();
             if (in.equals("1")) {
-                Integer index = shortcuts.indexOf(shortcutWithSameTrigger);
-                shortcuts.set(index, this.shortcut);
-                this.shortcutModel.update(shortcuts);
+                this.shortcutModel.upsert(shortcut);
                 return SubFrame.NEW_SHORTCUT_QUESTION;
             }
             if (in.equals("2")) return SubFrame.INITIAL_FRAME;
             return SubFrame.SHORTCUT;
         }
-        shortcuts.add(this.shortcut);
-        this.shortcutModel.update(shortcuts);
+        this.shortcutModel.upsert(shortcut);
         return SubFrame.NEW_SHORTCUT_QUESTION;
     }
 }
