@@ -212,6 +212,11 @@ As `views` são as aplicações de mais baixo nível, cujo o usuário terá cont
 
 - Atualizar readme com últimos refactor;
 - Criar vídeos explicativos;
+- Criar feature para deixar as coisas maiúslas ou minúsculas; Me basear no VSCode:
+    {
+        "trigger": "ctrl+space u",
+        "actions": [{ type: "editor", "command": "transformToUppercase" }]
+    }
 - Permitir buildar com um mapper para US e outro para ABNT2, ou um mapper personalizado;
 - Caso não exista um arquivo de configurações, gerar automaticamente;
 - Criar feature para permitir mover o mouse pelo teclado; ex.:
