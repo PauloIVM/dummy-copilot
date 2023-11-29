@@ -1,44 +1,30 @@
 [
-    {
-        "trigger": ". g p ctrl",
-        "actions": [
-            { "type": "sequence", "keys": "backspace", "repeat": 3 },
-            { "type": "paste", "content": "git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)" }
-        ]
-    },
-    {
-        "trigger": ". c ctrl",
-        "actions": [
-            { "type": "sequence", "keys": "backspace backspace" },
-            { "type": "paste", "content": "ç" }
-        ]
-    },
-    {
-        "trigger": ". e ' ctrl",
-        "actions": [
-            { "type": "sequence", "keys": "backspace", "repeat": 3 },
-            { "type": "paste", "content": "é" }
-        ]
-    },
-    {
-        "trigger": ". ' a ctrl",
-        "actions": [
-            { "type": "sequence", "keys": "backspace", "repeat": 3 },
-            { "type": "paste", "content": "à" }
-        ]
-    },
-    {
-        "trigger": ". a ' ctrl",
-        "actions": [
-            { "type": "sequence", "keys": "backspace", "repeat": 3 },
-            { "type": "paste", "content": "á" }
-        ]
-    },
-    {
-        "trigger": "ctrl+space m",
-        "actions": [
-            { "type": "sequence", "keys": "backspace" },
-            { "type": "paste", "content": "TODO: Allow mouse mode" }
-        ]
-    }
+  {
+    "trigger": ". g p ctrl",
+    "actions": [
+      {
+        "type": "sequence",
+        "keys": "backspace",
+        "repeat": 3
+      },
+      {
+        "type": "paste",
+        "content": "git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
+      }
+    ]
+  },
+  {
+    "trigger": "ctrl+space m",
+    "actions": [
+      {
+        "type": "sequence",
+        "keys": "backspace",
+        "repeat": 1
+      },
+      {
+        "type": "paste",
+        "content": "TODO: Allow mouse mode"
+      }
+    ]
+  }
 ]
