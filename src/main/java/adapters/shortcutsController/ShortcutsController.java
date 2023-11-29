@@ -2,10 +2,10 @@ package adapters.shortcutsController;
 
 import adapters.interfaces.IKeylistenner;
 import adapters.shortcutModel.ShortcutModel;
+import entities.actionsExecutor.ActionsExecutor;
+import entities.actionsExecutor.IRobot;
 import entities.keyEvent.KeyEvent;
-import usecases.actionsExecutor.ActionsExecutor;
-import usecases.actionsExecutor.IRobot;
-import usecases.shortcutsEvaluator.ShortcutsEvaluator;
+import entities.shortcutsEvaluator.ShortcutsEvaluator;
 
 public class ShortcutsController {
     private IKeylistenner keylistenner;

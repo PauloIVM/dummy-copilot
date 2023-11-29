@@ -1,4 +1,4 @@
-package usecases.actionsExecutor;
+package entities.actionsExecutor;
 
 import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import entities.action.ActionPaste;
 import entities.action.ActionSequence;
+import entities.actionsExecutor.ActionsExecutor;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;

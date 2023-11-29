@@ -1,4 +1,4 @@
-package usecases.actionsExecutor;
+package entities.actionsExecutor;
 
 import entities.action.Action;
 import entities.action.ActionPaste;

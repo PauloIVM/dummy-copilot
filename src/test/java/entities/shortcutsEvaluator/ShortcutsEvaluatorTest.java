@@ -1,4 +1,4 @@
-package usecases.shortcutsEvaluator;
+package entities.shortcutsEvaluator;
 
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;

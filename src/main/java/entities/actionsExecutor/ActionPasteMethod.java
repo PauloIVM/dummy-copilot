@@ -1,4 +1,4 @@
-package usecases.actionsExecutor;
+package entities.actionsExecutor;
 
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;

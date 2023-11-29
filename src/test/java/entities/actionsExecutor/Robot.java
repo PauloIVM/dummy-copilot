@@ -1,7 +1,8 @@
-package usecases.actionsExecutor;
+package entities.actionsExecutor;
 
 import java.util.ArrayList;
 
+import entities.actionsExecutor.IRobot;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;

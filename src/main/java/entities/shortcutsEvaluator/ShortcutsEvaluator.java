@@ -1,4 +1,4 @@
-package usecases.shortcutsEvaluator;
+package entities.shortcutsEvaluator;
 
 import java.util.ArrayList;
 
