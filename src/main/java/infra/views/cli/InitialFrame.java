@@ -1,9 +1,9 @@
 package infra.views.cli;
+
 import java.util.Scanner;
-import java.io.Console;
 
 class InitialFrame implements IFrame {
-    public Frame run(Scanner scan, Console console) {
+    public Frame run(Scanner scan) {
         TerminalUtil.clear();
         TerminalUtil.showCursor();
         TerminalUtil.setGoldColor();

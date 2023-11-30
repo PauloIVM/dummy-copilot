@@ -1,11 +1,11 @@
 package infra.views.cli;
 
-import java.util.Scanner;
-import java.io.Console;
 import infra.composers.UsecaseFactory;
 
+import java.util.Scanner;
+
 class ShortcutRunnerFrame implements IFrame {
-    public Frame run(Scanner scan, Console console) {
+    public Frame run(Scanner scan) {
         var shortcutsRunner = UsecaseFactory.createShortcutsRunner();
         shortcutsRunner.init();
         TerminalUtil.clear();

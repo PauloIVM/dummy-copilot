@@ -8,7 +8,6 @@ import infra.composers.UsecaseFactory;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.Console;
 
 enum SubFrame {
     INITIAL_FRAME,
@@ -29,7 +28,7 @@ class InsertionFrame implements IFrame {
         this.shortcut = new Shortcut();
     }
 
-    public Frame run(Scanner scan, Console console) {
+    public Frame run(Scanner scan) {
         SubFrame currFrame = this.runTriggerSubFrame();
         while(true) {
             if (currFrame == SubFrame.INITIAL_FRAME) {
@@ -65,10 +64,6 @@ class InsertionFrame implements IFrame {
             }
             break;
         }
-        return Frame.INITIAL_FRAME;
-    }
-
-    Frame run(Console console) {
         return Frame.INITIAL_FRAME;
     }
 

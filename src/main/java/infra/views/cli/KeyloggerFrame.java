@@ -1,14 +1,13 @@
 package infra.views.cli;
 
-import adapters.keyIdAdapter.KeyIdAdapter;
 import entities.keyId.KeyId;
+import adapters.keyIdAdapter.KeyIdAdapter;
 import infra.composers.UsecaseFactory;
 
 import java.util.Scanner;
-import java.io.Console;
 
 class KeyloggerFrame implements IFrame {
-    public Frame run(Scanner scan, Console console) {
+    public Frame run(Scanner scan) {
         TerminalUtil.clear();
         TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
