@@ -2,8 +2,8 @@ package infra.robot;
 
 import java.awt.event.KeyEvent;
 
+import entities.actionsExecutor.IRobot;
 import entities.keyId.KeyId;
-import usecases.actionsExecutor.IRobot;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;

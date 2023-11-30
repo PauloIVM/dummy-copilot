@@ -1,6 +1,5 @@
 package infra.views.cli;
 import java.util.Scanner;
-import java.io.Console;
 
 public class Cli {
     public Cli() {}
@@ -9,9 +8,8 @@ public class Cli {
         IFrame frame = new InitialFrame();
         Frame nextFrame = Frame.INITIAL_FRAME;
         Scanner scan = new Scanner(System.in);
-        Console console = System.console();
         while(true) {
-            nextFrame = frame.run(scan, console);
+            nextFrame = frame.run(scan);
             if (nextFrame == Frame.INITIAL_FRAME) {
                 frame = new InitialFrame();
             }

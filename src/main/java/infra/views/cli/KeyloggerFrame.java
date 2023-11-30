@@ -1,42 +1,35 @@
 package infra.views.cli;
 
-import java.util.Scanner;
-import java.io.Console;
-import java.util.function.Consumer;
+import entities.keyId.KeyId;
+import adapters.keyIdAdapter.KeyIdAdapter;
+import infra.composers.UsecaseFactory;
 
-import infra.composers.KeyloggerControllerFactory;
+import java.util.Scanner;
 
 class KeyloggerFrame implements IFrame {
-    public Frame run(Scanner scan, Console console) {
-        Consumer<String> onKeyPressed = (String key) -> {
-            if (key == "enter") {
-                System.out.print(String.format("\033[%dA", 1));
-                System.out.print("\033[2K");
-                System.out.print("-> ");
-                System.out.println("You typed 'enter' with another application focused. Please click on the terminal to type 'enter' key and exit.");
-                return;
-            }
-            System.out.print(String.format("\033[%dA", 1));
-            System.out.print("\033[2K");
-            System.out.print("-> ");
-            System.out.println(key);
-        };
-        var keylogger = KeyloggerControllerFactory.create(onKeyPressed);
-        keylogger.init();
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+    public Frame run(Scanner scan) {
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("");
         System.out.println("Type any key to see the keycode on terminal. Type 'enter' to exit.");
         System.out.println("");
-        AnsiUtil.setGoldColor();
-        AnsiUtil.hideCursor();
+        TerminalUtil.setGoldColor();
+        TerminalUtil.hideCursor();
         System.out.println("-> ");
-        console.readPassword("");
-        keylogger.stop();
-        AnsiUtil.showCursor();
-        AnsiUtil.clear();
+        var keyScanner = UsecaseFactory.createKeyScanner();
+        while (true) {
+            var key = keyScanner.next();
+            if (key.keyId.equals(KeyId.VK_ENTER)) break;
+            String keyText = KeyIdAdapter.parseKeyIdToText(key.keyId);
+            System.out.print(String.format("\033[%dA", 1));
+            System.out.print("\033[2K");
+            System.out.print("-> ");
+            System.out.println(keyText);
+        }
+        keyScanner.close();
+        TerminalUtil.showCursor();
         return Frame.INITIAL_FRAME;
     }
 }

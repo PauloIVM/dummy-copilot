@@ -64,6 +64,8 @@ TODO: Adicionar vídeo tutorial...
 
 Tendo feito a configuração e executado o projeto com sucesso, você terá percebido a importância do arquivo `shortcuts.config.json`. Neste arquivo, é onde estão armazenados todos os seus atalhos personalizados.
 
+Para criar um novo atalho, você mesmo pode editar o arquivo JSON, ou, você pode cadastrar um novo atalho pelo CLI. Esta segunda opção é a maneira mais simples e indicada; contudo, vou seguir explicando a ideia do atalho no JSON.
+
 Cada atalho possui um `trigger` e uma lista de `actions`. Para formar a sequência de um `trigger` de um atalho, basta considerar que a sequência é composta pela representação textual de cada tecla separada por espaços. No caso de teclas pressionadas simultaneamente, é necessário utilizar o sinal `+` entre as duas teclas em vez do espaço.
 
 Por exemplo, suponhamos um `trigger` em que o usuário pressiona a tecla `control`; mantendo o `control` pressionado, pressiona a tecla `espaço`. Em seguida, libera tanto a tecla `espaço` quanto a tecla `control`; e por fim, pressiona e solta a tecla `m`. A representação do `trigger` no formato de texto seria:
@@ -72,7 +74,7 @@ Por exemplo, suponhamos um `trigger` em que o usuário pressiona a tecla `contro
 "trigger": "ctrl+space m"
 ```
 
-Observe que para criar um `trigger`, é necessário conhecer a representação em texto de cada tecla. Para descobrir isso, você pode iniciar o CLI, selecionar a opção `Start keylogger` e, em seguida, as teclas que você pressionar terão o código textual exibido no terminal. Um detalhe importante é que a representação das teclas se baseia no layout do teclado dos EUA (US International Keyboard Layout), então os nomes das teclas podem ser um pouco diferentes dos símbolos no seu teclado; no entanto, basta copiar e colar a string indicada pelo CLI. Em breve, planejo ter uma funcionalidade para inserir um atalho pelo CLI, facilitando caso não queira inserir diretamente pelo JSON.
+Observe que para criar um `trigger`, é necessário conhecer a representação em texto de cada tecla. Para descobrir isso, você pode iniciar o CLI, selecionar a opção `Start keylogger` e, em seguida, as teclas que você pressionar terão o código textual exibido no terminal. Um detalhe importante é que a representação das teclas se baseia no layout do teclado dos EUA (US International Keyboard Layout), então os nomes das teclas podem ser um pouco diferentes dos símbolos no seu teclado; no entanto, basta copiar e colar a string indicada pelo CLI.
 
 Depois de ter o `trigger`, agora você precisa fornecer as ações do seu atalho. Por enquanto, temos apenas dois tipos de ações: `paste` e `sequence`. Na lista de ações que você fornecerá no atalho, é possível combinar ações dos dois tipos. Normalmente, você vai querer apagar algum caractere que foi utilizado para acionar a ação e, em seguida, inserir algo ou executar uma sequência de teclas. No exemplo abaixo, eu finalizo o atalho inicialmente com uma ação que pressiona a tecla `backspace` para apagar a tecla `m` que foi digitada durante o trigger; em seguida, realizo um `paste` de um conteúdo qualquer:
 
@@ -124,21 +126,24 @@ A seguir, a estrutura de camadas do projeto:
        ├── composers
        ├── keylistenner
        ├── robot
-       ├── shortcutsfile
+       ├── repositories
        └── views
     ├── adapters
-       ├── keyIdAdapter
-       ├── keyloggerController
-       └── shortcutsController
+       ├── keyEventListAdapter
+       └── keyIdAdapter
     ├── usecases
-       ├── actionsExecutor
-       └── shortcutsEvaluator
+       ├── keyEventsScanner
+       ├── keyScanner
+       ├── shortcutsRunner
+       └── shortcutsUpdater
     └── entities
        ├── action
+       ├── actionsExecutor
        ├── clickType
        ├── keyEvent
        ├── keyId
-       └── shortcut
+       ├── shortcut
+       └── shortcutsEvaluator
 ```
 
 ### 4.1. Entities (Business Rules)
@@ -147,70 +152,24 @@ Esses são os `objetos de negócio` da aplicação. Todas as regras de negócio 
 
 Esta é a camada mais abstrata; não deve conter referências a camadas além dela mesma.
 
-- Action;
-- ClickType;
-- KeyId;
-- KeyEvent;
-- Shortcut;
-
-A `Action` representa uma ação que o programa deve executar. Essas ações fazem parte da entidade `Shortcut`; cada atalho opera com base em um trigger e em uma ação correspondente.
-
-O `ClickType` é o tipo de clique que pode ser feito pelo usuário. Basicamente, o usuário pode pressionar ou soltar uma tecla.
-
-O `KeyId` é a entidade que relaciona cada tecla a um código inteiro.
-
-O `KeyEvent` é uma combinação do `KeyId` e `ClickType`. Assim, sempre que uma tecla for solta ou pressionada, um `KeyEvent` poderá ser usado para representar esse evento.
-
-Por fim, a entidade `Shortcut` é uma composição das outras entidades. Ela representa um atalho, com um trigger (que nada mais é do que uma lista de `KeyEvent`) e possui uma lista de `Action` para serem executadas quando o atalho for ativado.
-
 ### 4.2. Usecases (Application Business Rules)
 
-Aqui estão as principais regras de negócio (por enquanto poucas). Esta camada tem a liberdade de importar e manipular as entidades para criar as regras de negócio.
-
-- ActionsExecutor;
-- ShortcutsEvaluator;
-
-O `ActionsExecutor` é responsável por executar todas as actions baseado em um identificador para cada ação.
-
-Idealmente, seria preferível que o `ActionsExecutor` não tivesse conhecimento sobre a estrutura de camadas superior, evitando qualquer acoplamento com classes ou interfaces de camadas superiores. No entanto, em certos casos, torna-se difícil modelar essa regra de negócio sem assumir algo na infraestrutura que execute essas ações no sistema. Assim, podemos utilizar a **Inversão de Dependência**; o `ActionsExecutor` especificará um `IRobot` genérico, e a camada de infra precisará declarar um `Robot` que implemente o `IRobot` especificado na camada de usecases. Dessa forma, a **Regra da Dependência** da Clean Architecture não será violada.
-
-O `ShortcutsEvaluator` é responsável por, baseado em uma lista de atalhos e numa entrada de teclas clicadas, determinar se um atalho foi acionado ou não.
+Aqui estão as principais regras de negócio. Esta camada tem a liberdade de importar e manipular as entidades para criar as regras de negócio. A ideia é que as classes dessas camadas se aproximem ao máximo de um requisito funcional da aplicação.
 
 ### 4.3. Adapters (Interface Adapters)
 
-Essa camada atua como uma ponte entre a infraestrutura e os casos de uso. Aqui, atualmente, estão presentes adaptadores e controladores.
-
-- KeyIdAdapter;
-- KeyloggerController;
-- ShortcutsController;
-
-O `KeyIdAdapter` é responsável por mapear a entidade KeyId para texto e vice-versa, útil especialmente para representar visualmente os atalhos em um JSON ou no terminal.
-
-O `KeyloggerController` é responsável por associar um `IKeylistener` (que será declarado na camada de infraestrutura, novamente utilizando a inversão de dependência) com o adaptador `KeyIdAdapter` e a entidade `KeyEvent`, expondo uma função a ser executada sempre que uma tecla for pressionada.
-
-O `ShortcutsController` é responsável por associar os casos de uso `ActionsExecutor` e `ShortcutsEvaluator` com um `IKeylistener`. Para isso, também precisará ter uma entrada de quais são os atalhos do usuário, que são fornecidos pela interface `IShortcutsFileParser`, além de outras dependências de camadas internas que se mostraram necessárias para gerenciar todo esse processo. O objetivo desse controlador é aproximar o uso do sistema de atalhos o máximo possível da infraestrutura, sem, no entanto, implementar nada da camada de infraestrutura.
+Essa camada atua como uma ponte entre a infraestrutura e os casos de uso. Na modelagem atual, essa camada não necessitou de muitas implementações, apenas alguns adapters (ou pode chamar de parsers se preferir).
 
 ### 4.4. Infra (Libs, OS, Drivers...)
 
 Nesta camada, encontramos a implementação concreta das classes de mais baixo nível, responsáveis por ler arquivos, interagir com o sistema operacional, criar interfaces gráficas, entre outras funções.
 
-- KeyListenner;
-- Robot;
-- ShortcutsFile;
-- composers;
-- views (CLI);
-
-O `KeyListener` é responsável por "ouvir" o teclado do usuário. Cada tecla pressionada aciona um método de um objeto dessa classe. Para criar essa classe, precisei utilizar uma biblioteca externa, que foi completamente isolada graças às boas práticas sugeridas no Clean Architecture. Como essa biblioteca possui um mapeamento de teclas diferente do que estou usando, esta implementação do `KeyListener` terá seu próprio adaptador para converter os códigos das teclas da biblioteca para as representações das teclas no meu domínio (`KeyId`, `ClickType` e `KeyEvent`).
-
-O `Robot` é responsável por realizar ações como digitar algo ou mover o mouse no computador do usuário, sem que o próprio usuário tenha realizado essas ações com seu teclado ou mouse. Esta é uma dependência nativa do Java. Alguns argumentam que não seria necessário isolá-la na camada infra. No entanto, optei por fazê-lo, pois entendi que isso manteria as regras de negócios mais puras.
-
-O `ShortcutsFile` é responsável por pegar um arquivo JSON e convertê-lo para uma lista de `Shortcut`. Em breve, ele também terá a responsabilidade de inserir atalhos no JSON, realizando o processo inverso.
-
-As `views` são as aplicações de mais baixo nível, cujo o usuário terá contato direto. Até o momento, tenho apenas uma CLI (interface de linha de comando). Para que a view funcione, ela precisa acessar outras estruturas da camada `infra`, instanciá-las e, em seguida, instanciar algum controlador passando essas dependências da camada `infra`. Para simplificar a construção de um controlador dentro da view, criei também o pacote `composers` na camada infra. Este pacote nada mais é do que `builders` dos controladores, os quais injetam todas as dependências da infraestrutura. Como esses `composers` estão na camada de `infra`, eles não violam a **Regra da Dependência**, pois conhecem apenas a implementação concreta desses elementos.
+Aqui basicamente vamos ter as views (por enquanto apenas um CLI), a implementação dos repositories, libs, e alguns recursos do OS, como o Robot da awt por exemplo.
 
 ## 5. Planejamento de próximos passos:
 
-- Atualizar readme com últimos refactor;
+- A tecla 'enter' do numpad quebra a aplicação no keylogger. Não apenas adicionar o mapeamento dessa tecla, mas caso uma tecla não mapeada seja inserida, tratar para que a aplicação não crashe.
+- Refatorar entidade 'ActionsExecutor' para algo próximo de um Observer. Ela não deve saber que existe um Robot, nem mesmo via interface. Ela deve apenas ter um subscribe pra avisar alguém quando uma actoin ocorrer. Daí nos usecases eu posso trazer a ideia do Robot via interface. Acho que isso vai deixar a entidade mais pura.
 - Criar vídeos explicativos;
 - Criar feature para deixar as coisas maiúslas ou minúsculas; Me basear no VSCode:
     {
