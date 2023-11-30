@@ -1,4 +1,4 @@
-package adapters.interfaces;
+package usecases.interfaces;
 
 import java.util.function.Consumer;
 import entities.keyEvent.KeyEvent;

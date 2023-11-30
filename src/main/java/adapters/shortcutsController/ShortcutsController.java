@@ -1,6 +1,6 @@
 package adapters.shortcutsController;
 
-import adapters.interfaces.IKeylistenner;
+import usecases.interfaces.IKeylistenner;
 import adapters.shortcutModel.ShortcutModel;
 import entities.actionsExecutor.ActionsExecutor;
 import entities.actionsExecutor.IRobot;

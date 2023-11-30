@@ -1,7 +1,7 @@
 package adapters.keyloggerController;
 
 import java.util.function.Consumer;
-import adapters.interfaces.IKeylistenner;
+import usecases.interfaces.IKeylistenner;
 import adapters.keyIdAdapter.KeyIdAdapter;
 import entities.keyEvent.KeyEvent;
 

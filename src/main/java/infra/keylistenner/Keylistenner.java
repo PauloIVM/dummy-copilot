@@ -4,7 +4,7 @@ import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
-import adapters.interfaces.IKeylistenner;
+import usecases.interfaces.IKeylistenner;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;
@@ -17,6 +17,7 @@ public class Keylistenner implements NativeKeyListener, IKeylistenner {
     private Consumer<KeyEvent> onKeyPressed;
     private Consumer<KeyEvent> onKeyReleased;
     private Consumer<KeyEvent> onKeyTyped;
+    static private Boolean hasPrintedNativeLog = false;
 
     public Keylistenner() {}
 
@@ -41,6 +42,13 @@ public class Keylistenner implements NativeKeyListener, IKeylistenner {
         try {
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(this);
+            if (!Keylistenner.hasPrintedNativeLog) {
+                for (int i = 0; i < 18; i++) {
+                    System.out.print("\033[1A");
+                    System.out.print("\033[2K"); 
+                }
+                Keylistenner.hasPrintedNativeLog = true;
+            }
         } catch (NativeHookException ex) {
             System.err.println("There was a problem registering the native hook.");
             System.err.println(ex.getMessage());
