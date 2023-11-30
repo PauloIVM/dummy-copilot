@@ -5,8 +5,8 @@ import infra.repositories.shortcutsRepository.ShortcutsRepository;
 import infra.robot.Robot;
 import usecases.keyEventsScanner.KeyEventsScanner;
 import usecases.keyScanner.KeyScanner;
-import usecases.shortcutUpdater.ShortcutUpdater;
 import usecases.shortcutsRunner.ShortcutsRunner;
+import usecases.shortcutsUpdater.ShortcutsUpdater;
 
 public class UsecaseFactory {
 
@@ -18,8 +18,8 @@ public class UsecaseFactory {
         );
     }
 
-    static public ShortcutUpdater createShortcutUpdater() {
-        return new ShortcutUpdater(new ShortcutsRepository());
+    static public ShortcutsUpdater createShortcutUpdater() {
+        return new ShortcutsUpdater(new ShortcutsRepository());
     }
 
     static public KeyEventsScanner createKeyEventsScanner() {

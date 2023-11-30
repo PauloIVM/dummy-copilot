@@ -1,14 +1,14 @@
-package usecases.shortcutUpdater;
+package usecases.shortcutsUpdater;
 
 import entities.shortcut.Shortcut;
 import usecases.interfaces.IShortcutRepository;
 
 import java.util.ArrayList;
 
-public class ShortcutUpdater {
+public class ShortcutsUpdater {
     private IShortcutRepository shortcutRepository;
 
-    public ShortcutUpdater(IShortcutRepository s) {
+    public ShortcutsUpdater(IShortcutRepository s) {
         this.shortcutRepository = s;
     }
 
