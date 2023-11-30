@@ -1,16 +1,19 @@
-package adapters.shortcutModel;
+package infra.repositories.shortcutsRepository;
 
 import java.util.ArrayList;
 
-import adapters.interfaces.IShortcutData;
-import adapters.interfaces.IShortcutsDatabase;
-import adapters.shortcutDataAdapter.ShortcutsDataAdapter;
 import entities.shortcut.Shortcut;
+import usecases.interfaces.IShortcutRepository;
 
-public class ShortcutModel {
-    private IShortcutsDatabase db;
+public class ShortcutsRepository implements IShortcutRepository {
+    private ShortcutsDatabase db;
 
-    public ShortcutModel(IShortcutsDatabase db) {
+    public ShortcutsRepository() {
+        this.db = new ShortcutsDatabase();
+    }
+
+    // TODO: Criar uma interface pra esse DB pra me permitir criar os testes automatizados
+    public ShortcutsRepository(ShortcutsDatabase db) {
         this.db = db;
     }
 
@@ -19,10 +22,7 @@ public class ShortcutModel {
     }
 
     public Boolean update(ArrayList<Shortcut> shortcuts) {
-        IShortcutData[] shortcutsData = ShortcutsDataAdapter.toShortcutsData(
-            shortcuts,
-            db
-        ); 
+        ShortcutData[] shortcutsData = ShortcutsDataAdapter.toShortcutsData(shortcuts); 
         return db.update(shortcutsData);
     }
 

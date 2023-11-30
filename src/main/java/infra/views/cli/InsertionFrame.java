@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import adapters.keyEventListAdapter.KeyEventListAdapter;
-import adapters.shortcutModel.ShortcutModel;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.shortcut.Shortcut;
@@ -12,7 +11,6 @@ import entities.shortcut.Shortcut;
 import java.io.Console;
 
 import infra.composers.UsecaseFactory;
-import infra.composers.ShortcutModelFactory;
 import usecases.keyEventsScanner.KeyEventsScanner;
 
 enum SubFrame {
@@ -29,11 +27,9 @@ enum SubFrame {
 
 class InsertionFrame implements IFrame {
     private Shortcut shortcut;
-    private ShortcutModel shortcutModel;
 
     public InsertionFrame() {
         this.shortcut = new Shortcut();
-        this.shortcutModel = ShortcutModelFactory.create();
     }
 
     public Frame run(Scanner scan, Console console) {
@@ -197,7 +193,8 @@ class InsertionFrame implements IFrame {
     }
 
     private SubFrame runShortcutSubFrame(Scanner scan) {
-        if (this.shortcutModel.hasTrigger(this.shortcut)) {
+        var shortcutsUpdater = UsecaseFactory.createShortcutUpdater();
+        if (shortcutsUpdater.hasTrigger(this.shortcut)) {
             AnsiUtil.clear();
             AnsiUtil.setGoldColor();
             System.out.println("DummyCopilot");
@@ -213,13 +210,13 @@ class InsertionFrame implements IFrame {
             AnsiUtil.setPurpleColor();
             String in = scan.next();
             if (in.equals("1")) {
-                this.shortcutModel.upsert(shortcut);
+                shortcutsUpdater.upsert(shortcut);
                 return SubFrame.NEW_SHORTCUT_QUESTION;
             }
             if (in.equals("2")) return SubFrame.INITIAL_FRAME;
             return SubFrame.SHORTCUT;
         }
-        this.shortcutModel.upsert(shortcut);
+        shortcutsUpdater.upsert(shortcut);
         return SubFrame.NEW_SHORTCUT_QUESTION;
     }
 

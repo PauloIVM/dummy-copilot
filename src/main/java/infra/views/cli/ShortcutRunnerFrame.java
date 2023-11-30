@@ -2,12 +2,12 @@ package infra.views.cli;
 
 import java.util.Scanner;
 import java.io.Console;
-import infra.composers.ShortcutsControllerFactory;
+import infra.composers.UsecaseFactory;
 
 class ShortcutRunnerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        var shortcutsController = ShortcutsControllerFactory.create();
-        shortcutsController.init();
+        var shortcutsRunner = UsecaseFactory.createShortcutsRunner();
+        shortcutsRunner.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();
         System.out.println("DummyCopilot");
@@ -21,7 +21,7 @@ class ShortcutRunnerFrame implements IFrame {
         System.out.print("Enter the number of one of the options above -> ");
         AnsiUtil.setPurpleColor();
         String in = scan.next();
-        shortcutsController.stop();
+        shortcutsRunner.stop();
         if (in.equals("1")) {
             AnsiUtil.clear();
             return Frame.INITIAL_FRAME;

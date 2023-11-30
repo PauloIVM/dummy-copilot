@@ -1,4 +1,4 @@
-package adapters.shortcutDataAdapter;
+package infra.repositories.shortcutsRepository;
 
 import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
@@ -6,15 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import adapters.interfaces.IShortcutData;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.keyId.KeyId;
 import entities.shortcut.Shortcut;
 
-import infra.shortcutsDatabase.ShortcutData;
-import infra.shortcutsDatabase.ShortcutDataAction;
-import infra.shortcutsDatabase.ShortcutsDatabase;
 
 public class ShortcutDataAdapterTest {
     ShortcutData[] shortcutsData;
@@ -72,9 +68,8 @@ public class ShortcutDataAdapterTest {
     @Test
     @DisplayName("Should create shortcuts-data")
     void testBasicShortcutsDataCreation() {
-        IShortcutData[] result = ShortcutsDataAdapter.toShortcutsData(
-            this.shortcuts,
-            new ShortcutsDatabase()
+        ShortcutData[] result = ShortcutsDataAdapter.toShortcutsData(
+            this.shortcuts
         );
         Assertions.assertEquals(this.shortcutsData[0].trigger, result[0].getTrigger());
         Assertions.assertEquals(this.shortcutsData[0].actions[0].getRepeat(), result[0].getActions()[0].getRepeat());

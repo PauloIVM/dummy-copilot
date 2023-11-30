@@ -1,18 +1,18 @@
-package adapters.shortcutsController;
+package usecases.shortcutsRunner;
 
 import usecases.interfaces.IKeylistenner;
-import adapters.shortcutModel.ShortcutModel;
+import usecases.interfaces.IShortcutRepository;
 import entities.actionsExecutor.ActionsExecutor;
 import entities.actionsExecutor.IRobot;
 import entities.keyEvent.KeyEvent;
 import entities.shortcutsEvaluator.ShortcutsEvaluator;
 
-public class ShortcutsController {
+public class ShortcutsRunner {
     private IKeylistenner keylistenner;
     private ActionsExecutor actionsExecutor;
     private ShortcutsEvaluator shortcutsEvaluator;
 
-    public ShortcutsController(IRobot r, IKeylistenner k, ShortcutModel s) {
+    public ShortcutsRunner(IRobot r, IKeylistenner k, IShortcutRepository s) {
         this.actionsExecutor = new ActionsExecutor(r);
         this.shortcutsEvaluator = new ShortcutsEvaluator(s.get());
         this.keylistenner = k;

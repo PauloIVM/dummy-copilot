@@ -1,8 +1,6 @@
-package infra.shortcutsDatabase;
+package infra.repositories.shortcutsRepository;
 
-import adapters.interfaces.IShortcutDataAction;
-
-public class ShortcutDataAction implements IShortcutDataAction  {
+public class ShortcutDataAction {
     public String type;
     public String keys;
     public String content;   

@@ -1,8 +1,4 @@
-package infra.shortcutsDatabase;
-
-import adapters.interfaces.IShortcutData;
-import adapters.interfaces.IShortcutDataAction;
-import adapters.interfaces.IShortcutsDatabase;
+package infra.repositories.shortcutsRepository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,16 +12,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ShortcutsDatabase implements IShortcutsDatabase {
+public class ShortcutsDatabase {
 
     public ShortcutsDatabase() {}
  
-    public IShortcutData[] get() {
+    public ShortcutData[] get() {
         ShortcutData[] shortcutsData = this.getShortcutsJsonFile();
         return shortcutsData;
     }
 
-    public Boolean update(IShortcutData[] s) {
+    public Boolean update(ShortcutData[] s) {
         ShortcutData[] shortcutsData = new ShortcutData[s.length];
         shortcutsData = (ShortcutData[]) s;
         String jsonFileName = "shortcuts.config.json";
@@ -42,30 +38,6 @@ public class ShortcutsDatabase implements IShortcutsDatabase {
         }
     }
 
-    public IShortcutData createShortcutData(String trigger, IShortcutDataAction[] actions) {
-        return new ShortcutData(trigger, (ShortcutDataAction[]) actions);
-    }
-
-    public IShortcutData[] createShortcutDataArray(Integer size) {
-        return new ShortcutData[size];
-    }
-
-    public IShortcutDataAction createShortcutDataAction(String type, String content) {
-        return new ShortcutDataAction(type, content);
-    }
-
-    public IShortcutDataAction createShortcutDataAction(String type, Integer repeat, String keys) {
-        return new ShortcutDataAction(type, repeat, keys);
-    }
-
-    public IShortcutDataAction[] createShortcutDataActionArray(Integer size) {
-        return new ShortcutDataAction[size];
-    }
-
-    // TODO: Dependendo de como eu defino a implementação das interfaces e dos casts,
-    // o gson pode dar uma error aqui, pois ele não aceita serializar uma interface.
-    // Criar testes unitários que garantam que nenhuma interface foi passada de forma
-    // errada.
     private ShortcutData[] getShortcutsJsonFile() {
         String jsonFileName = "shortcuts.config.json";
         try {
