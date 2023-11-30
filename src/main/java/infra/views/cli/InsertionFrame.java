@@ -11,9 +11,7 @@ import entities.shortcut.Shortcut;
 
 import java.io.Console;
 
-// TODO: Talvez se eu mudar o nome dos composers pra algo que remeta aos usecases, fique
-// mais fácil identificar que o código está mais limpo.
-import infra.composers.KeyEventsScannerFactory;
+import infra.composers.UsecaseFactory;
 import infra.composers.ShortcutModelFactory;
 import usecases.keyEventsScanner.KeyEventsScanner;
 
@@ -83,8 +81,8 @@ class InsertionFrame implements IFrame {
 
     private SubFrame runTriggerSubFrame(Console console) {
         this.shortcut = new Shortcut();
-        KeyEventsScanner scanner = KeyEventsScannerFactory
-            .create()
+        KeyEventsScanner scanner = UsecaseFactory
+            .createKeyEventsScanner()
             .setCallback(this::printKeyEventsTyped);
 
         String message = "Type the trigger keys (type 'enter' to continue or 'esc' to clear the trigger):";
@@ -184,8 +182,8 @@ class InsertionFrame implements IFrame {
     }
 
     private SubFrame runSequenceSubFrame(Scanner scan) {
-        KeyEventsScanner scanner = KeyEventsScannerFactory
-            .create()
+        KeyEventsScanner scanner = UsecaseFactory
+            .createKeyEventsScanner()
             .setCallback(this::printKeyEventsTyped);
 
         String message = "Type the keys sequence of your action (type 'enter' to continue or 'esc' to clear the trigger):";

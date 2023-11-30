@@ -3,8 +3,8 @@ package infra.composers;
 import infra.keylistenner.Keylistenner;
 import usecases.keyEventsScanner.KeyEventsScanner;
 
-public class KeyEventsScannerFactory {
-    static public KeyEventsScanner create() {
+public class UsecaseFactory {
+    static public KeyEventsScanner createKeyEventsScanner() {
         return new KeyEventsScanner(new Keylistenner());
     }
 }
