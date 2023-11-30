@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.io.Console;
 import java.util.function.Consumer;
 
-import infra.composers.KeyloggerControllerFactory;
+import infra.composers.UsecaseFactory;
 
 class KeyloggerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
@@ -21,7 +21,7 @@ class KeyloggerFrame implements IFrame {
             System.out.print("-> ");
             System.out.println(key);
         };
-        var keylogger = KeyloggerControllerFactory.create(onKeyPressed);
+        var keylogger = UsecaseFactory.createKeyLoggerRunner(onKeyPressed);
         keylogger.init();
         AnsiUtil.clear();
         AnsiUtil.setGoldColor();

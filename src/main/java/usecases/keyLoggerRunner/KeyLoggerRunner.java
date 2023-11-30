@@ -1,15 +1,15 @@
-package adapters.keyloggerController;
+package usecases.keyLoggerRunner;
 
 import java.util.function.Consumer;
 import usecases.interfaces.IKeylistenner;
 import adapters.keyIdAdapter.KeyIdAdapter;
 import entities.keyEvent.KeyEvent;
 
-public class KeyloggerController {
+public class KeyLoggerRunner {
     private Consumer<String> onKeyPressed;
     private IKeylistenner keylistenner;
 
-    public KeyloggerController(IKeylistenner keylistenner, Consumer<String> onKeyPressed) {
+    public KeyLoggerRunner(IKeylistenner keylistenner, Consumer<String> onKeyPressed) {
         this.keylistenner = keylistenner;
         this.onKeyPressed = onKeyPressed;
     }
