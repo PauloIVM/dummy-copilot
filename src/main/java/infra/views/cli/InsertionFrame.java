@@ -3,7 +3,6 @@ package infra.views.cli;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.shortcut.Shortcut;
-import usecases.keyEventsScanner.KeyEventsScanner;
 import adapters.keyEventListAdapter.KeyEventListAdapter;
 import infra.composers.UsecaseFactory;
 
@@ -31,7 +30,7 @@ class InsertionFrame implements IFrame {
     }
 
     public Frame run(Scanner scan, Console console) {
-        SubFrame currFrame = this.runTriggerSubFrame(console);
+        SubFrame currFrame = this.runTriggerSubFrame();
         while(true) {
             if (currFrame == SubFrame.INITIAL_FRAME) {
                 return Frame.INITIAL_FRAME;
@@ -41,7 +40,7 @@ class InsertionFrame implements IFrame {
                 continue;
             }
             if (currFrame == SubFrame.TRIGGER) {
-                currFrame = this.runTriggerSubFrame(console);
+                currFrame = this.runTriggerSubFrame();
                 continue;
             }
             if (currFrame == SubFrame.PASTE) {
@@ -49,7 +48,7 @@ class InsertionFrame implements IFrame {
                 continue;
             }
             if (currFrame == SubFrame.SEQUENCE) {
-                currFrame = this.runSequenceSubFrame(scan);
+                currFrame = this.runSequenceSubFrame();
                 continue;
             }
             if (currFrame == SubFrame.NEW_ACTION_QUESTION) {
@@ -73,16 +72,16 @@ class InsertionFrame implements IFrame {
         return Frame.INITIAL_FRAME;
     }
 
-    private SubFrame runTriggerSubFrame(Console console) {
+    private SubFrame runTriggerSubFrame() {
         this.shortcut = new Shortcut();
-        KeyEventsScanner scanner = UsecaseFactory
+        var scanner = UsecaseFactory
             .createKeyEventsScanner()
             .setCallback(this::printKeyEventsTyped);
 
         String message = "Type the trigger keys (type 'enter' to continue or 'esc' to clear the trigger):";
         this.printKeyEventsInstruction(message);
         TerminalUtil.hideCursor();
-        ArrayList<KeyEvent> trigger = scanner.next();
+        var trigger = scanner.next();
         TerminalUtil.showCursor();
         this.shortcut.setTrigger(trigger);
         return SubFrame.NEW_ACTION;
@@ -175,15 +174,15 @@ class InsertionFrame implements IFrame {
         return SubFrame.NEW_SHORTCUT_QUESTION;
     }
 
-    private SubFrame runSequenceSubFrame(Scanner scan) {
-        KeyEventsScanner scanner = UsecaseFactory
+    private SubFrame runSequenceSubFrame() {
+        var scanner = UsecaseFactory
             .createKeyEventsScanner()
             .setCallback(this::printKeyEventsTyped);
 
         String message = "Type the keys sequence of your action (type 'enter' to continue or 'esc' to clear the trigger):";
         this.printKeyEventsInstruction(message);
         TerminalUtil.hideCursor();
-        ArrayList<KeyEvent> keyEventList = scanner.next();
+        var keyEventList = scanner.next();
         TerminalUtil.showCursor();
         this.shortcut.addAction(1, keyEventList);
         TerminalUtil.clearTerminalBuffer();
