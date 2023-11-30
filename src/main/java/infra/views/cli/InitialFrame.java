@@ -4,20 +4,20 @@ import java.io.Console;
 
 class InitialFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
-        AnsiUtil.clear();
-        AnsiUtil.showCursor();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.showCursor();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("");
         System.out.println("[1] - Enter a new shortcut.");
         System.out.println("[2] - Start shortcuts-listenner.");
         System.out.println("[3] - Start keylogger.");
         System.out.println("[4] - Exit.");
         System.out.println("");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.print("Enter the number of one of the options above -> ");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         String in = scan.next();
         if (in.equals("1")) {
             return Frame.INSERTION_FRAME;

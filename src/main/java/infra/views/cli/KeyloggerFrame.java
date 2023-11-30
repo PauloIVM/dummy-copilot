@@ -23,20 +23,22 @@ class KeyloggerFrame implements IFrame {
         };
         var keylogger = UsecaseFactory.createKeyLoggerRunner(onKeyPressed);
         keylogger.init();
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("");
         System.out.println("Type any key to see the keycode on terminal. Type 'enter' to exit.");
         System.out.println("");
-        AnsiUtil.setGoldColor();
-        AnsiUtil.hideCursor();
+        TerminalUtil.setGoldColor();
+        TerminalUtil.hideCursor();
+        // TODO: Analisar se vale a pena manter esse console.readPass... eu poderia implementar
+        // a mesma rotina bloqueante aqui no keylogger tbm.
         System.out.println("-> ");
         console.readPassword("");
         keylogger.stop();
-        AnsiUtil.showCursor();
-        AnsiUtil.clear();
+        TerminalUtil.showCursor();
+        TerminalUtil.clear();
         return Frame.INITIAL_FRAME;
     }
 }

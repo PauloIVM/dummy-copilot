@@ -11,11 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.Console;
 
-import org.jline.reader.LineReader;
-import org.jline.reader.LineReaderBuilder;
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
-
 enum SubFrame {
     INITIAL_FRAME,
     TRIGGER,
@@ -86,26 +81,26 @@ class InsertionFrame implements IFrame {
 
         String message = "Type the trigger keys (type 'enter' to continue or 'esc' to clear the trigger):";
         this.printKeyEventsInstruction(message);
-        AnsiUtil.hideCursor();
+        TerminalUtil.hideCursor();
         ArrayList<KeyEvent> trigger = scanner.next();
-        AnsiUtil.showCursor();
+        TerminalUtil.showCursor();
         this.shortcut.setTrigger(trigger);
         return SubFrame.NEW_ACTION;
     }
 
     private SubFrame runNewActionSubFrame(Scanner scan) {
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("");
         System.out.println("Trigger typed:");
         System.out.println("");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.print("-> ");
         System.out.println(KeyEventListAdapter.toString(this.shortcut.trigger));
         System.out.println("");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("Now choose some actionType or cancel this shortcut:");
         System.out.println("");
         System.out.println("[1] - Paste action.");
@@ -113,9 +108,9 @@ class InsertionFrame implements IFrame {
         System.out.println("[3] - Cancel and insert a new shortcut.");
         System.out.println("[4] - Cancel and go to initial menu.");
         System.out.println("");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.print("Enter the number of one of the options above -> ");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         String in = scan.next();
         if (in.equals("1")) return SubFrame.PASTE;
         if (in.equals("2")) return SubFrame.SEQUENCE;
@@ -125,35 +120,35 @@ class InsertionFrame implements IFrame {
     }
 
     private SubFrame runPasteSubFrame(Scanner scan) {
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
         System.out.println("");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("Now insert the content that action should paste:");
         System.out.println("");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.print("-> ");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         String in = scan.next();
         this.shortcut.addAction(in);
         return SubFrame.NEW_ACTION_QUESTION;
     }
 
     private SubFrame runNewActionQuestionSubFrame(Scanner scan) {
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
         System.out.println("");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("Do you want to add one more action?");
         System.out.println("");
         System.out.println("[1] - Yes");
         System.out.println("[2] - No");
         System.out.println("");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.print("-> ");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         String in = scan.next();
         if (in.equals("1")) return SubFrame.NEW_ACTION;
         if (in.equals("2")) return SubFrame.SHORTCUT;
@@ -161,19 +156,19 @@ class InsertionFrame implements IFrame {
     }
 
     private SubFrame runNewShortcutQuestionSubFrame(Scanner scan) {
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
         System.out.println("");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("Shortcut added. Do you want to add another one?");
         System.out.println("");
         System.out.println("[1] - Yes");
         System.out.println("[2] - No");
         System.out.println("");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.print("-> ");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         String in = scan.next();
         if (in.equals("1")) return SubFrame.TRIGGER;
         if (in.equals("2")) return SubFrame.FINISH;
@@ -187,30 +182,30 @@ class InsertionFrame implements IFrame {
 
         String message = "Type the keys sequence of your action (type 'enter' to continue or 'esc' to clear the trigger):";
         this.printKeyEventsInstruction(message);
-        AnsiUtil.hideCursor();
+        TerminalUtil.hideCursor();
         ArrayList<KeyEvent> keyEventList = scanner.next();
-        AnsiUtil.showCursor();
+        TerminalUtil.showCursor();
         this.shortcut.addAction(1, keyEventList);
-        AnsiUtil.clearTerminalBuffer();
+        TerminalUtil.clearTerminalBuffer();
         return SubFrame.NEW_ACTION_QUESTION;
     }
 
     private SubFrame runShortcutSubFrame(Scanner scan) {
         var shortcutsUpdater = UsecaseFactory.createShortcutUpdater();
         if (shortcutsUpdater.hasTrigger(this.shortcut)) {
-            AnsiUtil.clear();
-            AnsiUtil.setGoldColor();
+            TerminalUtil.clear();
+            TerminalUtil.setGoldColor();
             System.out.println("DummyCopilot");
             System.out.println("");
-            AnsiUtil.setPurpleColor();
+            TerminalUtil.setPurpleColor();
             System.out.println("You are trying to insert a shortcut with a trigger that is already used in another. This will replace the previous shortcut.");
             System.out.println("");
             System.out.println("[1] - Continue");
             System.out.println("[2] - Cancel");
             System.out.println("");
-            AnsiUtil.setGoldColor();
+            TerminalUtil.setGoldColor();
             System.out.print("-> ");
-            AnsiUtil.setPurpleColor();
+            TerminalUtil.setPurpleColor();
             String in = scan.next();
             if (in.equals("1")) {
                 shortcutsUpdater.upsert(shortcut);
@@ -224,14 +219,14 @@ class InsertionFrame implements IFrame {
     }
 
     private void printKeyEventsInstruction(String mainMessage) {
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("\n");
         System.out.println(mainMessage);
         System.out.println("\n");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.println("-> ");
         System.out.println("\n\n\n");
     }
@@ -240,17 +235,17 @@ class InsertionFrame implements IFrame {
         KeyEvent lastKey = null;
         if (keyEventList != null) lastKey = keyEventList.get(keyEventList.size() - 1);
         if (lastKey != null && lastKey.clickType == ClickType.DOWN) return;
-        AnsiUtil.clearCurrLine();
-        AnsiUtil.moveLinesUp(5);
-        AnsiUtil.clearCurrLine();
+        TerminalUtil.clearCurrLine();
+        TerminalUtil.moveLinesUp(5);
+        TerminalUtil.clearCurrLine();
         System.out.print("\r-> ");
         if (lastKey == null) {
             System.out.println("\n\n\n\n");
-            AnsiUtil.clearCurrLine();
+            TerminalUtil.clearCurrLine();
             return;
         }
         System.out.println(KeyEventListAdapter.toString(keyEventList));
         System.out.println("\n\n\n");
-        AnsiUtil.clearCurrLine();
+        TerminalUtil.clearCurrLine();
     }
 }

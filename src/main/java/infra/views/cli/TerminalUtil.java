@@ -5,18 +5,11 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
-public class AnsiUtil {
+public class TerminalUtil {
+    static private Terminal terminal = null;
+
     static void clear() {
         System.out.print("\033[H\033[2J");
-    }
-    
-    static void resetColors() {
-        System.out.print("\033[0m");
-    }
-
-    static void hideInput() {
-        System.out.print("\033[0;30m");
-        System.out.print("\033[40m");
     }
 
     static void clearCurrLine() {
@@ -39,10 +32,6 @@ public class AnsiUtil {
         System.out.print("\033[38;5;213m");
     }
 
-    static void hideCursor() {
-        System.out.print("\033[?25l");
-    }
-
     // INFO: This method avoid some bugs when I use the keyEventsScanner together with
     // native scanner
     static void clearTerminalBuffer() {
@@ -55,6 +44,30 @@ public class AnsiUtil {
     }
 
     static void showCursor() {
+        TerminalUtil.showInput();
         System.out.print("\033[?25h");
+    }
+
+    static void hideCursor() {
+        TerminalUtil.hideInput();
+        System.out.print("\033[?25l");
+    }
+
+    static private void showInput() {
+        TerminalUtil.buildTerminal();
+        TerminalUtil.terminal.echo(true);
+    }
+
+    static private void hideInput() {
+        TerminalUtil.buildTerminal();
+        TerminalUtil.terminal.echo(false);
+    }
+
+    static private void buildTerminal() {
+        if (TerminalUtil.terminal == null) {
+            try {
+                TerminalUtil.terminal = TerminalBuilder.terminal();
+            } catch (Exception e) {}
+        }
     }
 }

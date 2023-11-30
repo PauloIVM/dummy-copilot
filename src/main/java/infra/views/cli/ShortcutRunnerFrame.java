@@ -8,25 +8,25 @@ class ShortcutRunnerFrame implements IFrame {
     public Frame run(Scanner scan, Console console) {
         var shortcutsRunner = UsecaseFactory.createShortcutsRunner();
         shortcutsRunner.init();
-        AnsiUtil.clear();
-        AnsiUtil.setGoldColor();
+        TerminalUtil.clear();
+        TerminalUtil.setGoldColor();
         System.out.println("DummyCopilot");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         System.out.println("");
         System.out.println("Running shortcuts-listenner...");
         System.out.println("");
         System.out.println("[1] - Stop shortcuts-listenner.");
         System.out.println("");
-        AnsiUtil.setGoldColor();
+        TerminalUtil.setGoldColor();
         System.out.print("Enter the number of one of the options above -> ");
-        AnsiUtil.setPurpleColor();
+        TerminalUtil.setPurpleColor();
         String in = scan.next();
         shortcutsRunner.stop();
         if (in.equals("1")) {
-            AnsiUtil.clear();
+            TerminalUtil.clear();
             return Frame.INITIAL_FRAME;
         }
-        AnsiUtil.clear();
+        TerminalUtil.clear();
         return Frame.SHORTCUT_RUNNER_FRAME;
     }
 }
