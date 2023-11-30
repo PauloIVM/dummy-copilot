@@ -168,7 +168,6 @@ Aqui basicamente vamos ter as views (por enquanto apenas um CLI), a implementaç
 
 ## 5. Planejamento de próximos passos:
 
-- A tecla 'enter' do numpad quebra a aplicação no keylogger. Não apenas adicionar o mapeamento dessa tecla, mas caso uma tecla não mapeada seja inserida, tratar para que a aplicação não crashe.
 - Refatorar entidade 'ActionsExecutor' para algo próximo de um Observer. Ela não deve saber que existe um Robot, nem mesmo via interface. Ela deve apenas ter um subscribe pra avisar alguém quando uma actoin ocorrer. Daí nos usecases eu posso trazer a ideia do Robot via interface. Acho que isso vai deixar a entidade mais pura.
 - Criar vídeos explicativos;
 - Criar feature para deixar as coisas maiúslas ou minúsculas; Me basear no VSCode:

@@ -21,7 +21,7 @@ class KeyloggerFrame implements IFrame {
         var keyScanner = UsecaseFactory.createKeyScanner();
         while (true) {
             var key = keyScanner.next();
-            if (key.keyId.equals(KeyId.VK_ENTER)) break;
+            if (key.keyId != null && key.keyId.equals(KeyId.VK_ENTER)) break;
             String keyText = KeyIdAdapter.parseKeyIdToText(key.keyId);
             System.out.print(String.format("\033[%dA", 1));
             System.out.print("\033[2K");
