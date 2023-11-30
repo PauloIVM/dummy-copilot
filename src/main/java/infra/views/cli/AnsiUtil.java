@@ -1,5 +1,10 @@
 package infra.views.cli;
 
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+
 public class AnsiUtil {
     static void clear() {
         System.out.print("\033[H\033[2J");
@@ -36,6 +41,17 @@ public class AnsiUtil {
 
     static void hideCursor() {
         System.out.print("\033[?25l");
+    }
+
+    // INFO: This method avoid some bugs when I use the keyEventsScanner together with
+    // native scanner
+    static void clearTerminalBuffer() {
+        try {
+            Terminal terminal = TerminalBuilder.terminal();
+            LineReader lineReader = LineReaderBuilder.builder().terminal(terminal).build();
+            String linha = lineReader.readLine();
+            if (!linha.isEmpty()) lineReader.callWidget(LineReader.CLEAR_SCREEN);
+        } catch (Exception e) {}
     }
 
     static void showCursor() {

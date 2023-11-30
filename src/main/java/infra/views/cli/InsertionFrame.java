@@ -1,17 +1,20 @@
 package infra.views.cli;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import adapters.keyEventListAdapter.KeyEventListAdapter;
 import entities.clickType.ClickType;
 import entities.keyEvent.KeyEvent;
 import entities.shortcut.Shortcut;
+import usecases.keyEventsScanner.KeyEventsScanner;
+import adapters.keyEventListAdapter.KeyEventListAdapter;
+import infra.composers.UsecaseFactory;
 
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.Console;
 
-import infra.composers.UsecaseFactory;
-import usecases.keyEventsScanner.KeyEventsScanner;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
 enum SubFrame {
     INITIAL_FRAME,
@@ -188,7 +191,7 @@ class InsertionFrame implements IFrame {
         ArrayList<KeyEvent> keyEventList = scanner.next();
         AnsiUtil.showCursor();
         this.shortcut.addAction(1, keyEventList);
-        if (scan.hasNext()) scan.next();
+        AnsiUtil.clearTerminalBuffer();
         return SubFrame.NEW_ACTION_QUESTION;
     }
 
